@@ -15,10 +15,9 @@ export const routes: Routes = [
     { path: 'users/add', component: AddComponent,data: {
       roles: 1
     },
-    
      canActivate: [AuthenticationGaurdService]
      },
-     {path: 'user/edit:nationalCode', component: EditComponent},
+     {path: 'user/edit:username', component: EditComponent},
     // { path: 'users/edit/:id', component: UserEditComponent, canActivate: [AuthGuard] },
     // { path: 'products', component: ProductListComponent },
     // { path: 'products/add', component: ProductAddComponent, canActivate: [AuthGuard] },

@@ -10,3 +10,9 @@ export interface User {
     username: FormControl<string>;
     password: FormControl<string>;
   }
+
+  export interface UserList{
+    firstName:string ;
+    lastName:string ;
+    nationalCode: number;
+}

@@ -19,6 +19,7 @@ export class AutheticationService {
   get token$(): Observable<string | null> {
     return this.tokenSubject.asObservable();
   }
+ 
 
   get role$(): Observable<number> {
     return this.roleSubject.asObservable();
@@ -30,7 +31,8 @@ export class AutheticationService {
       map((response: any) => {
         const token = response.token;
         const role = response.role;
-
+console.log(token,"token")
+console.log(role,"rolee")
         this.tokenSubject.next(token);
         this.roleSubject.next(role);
       }),
@@ -53,6 +55,7 @@ export class AutheticationService {
   //   return this.
   // }
   getToken(): string | null {
+    console.log(this.tokenSubject,"gettoken")
     return this.tokenSubject.value;
   }
 

@@ -13,28 +13,48 @@ import { MatCard, MatCardModule } from '@angular/material/card';
 })
 export class ListComponent {
 
-  user: User[] = []
+  users: any[] = []
   isAdmin = false
-
   constructor(
     private userService: UserService,
     private authService: AutheticationService,
     private router: Router
   ) {}
-
+  // ngOnInit(){
+  //   this.userService.getUsers().subscribe({
+  //     next: (d) => {
+  //       console.log(d)
+  //       return this.users = d
+  //     }
+  //   })
+  // }
+  
   ngOnInit(): void {
-    console.log(this.isAdmin,"is admin")
-console.log(this.authService.isAuthenticated())
+    // Check if the user is authenticated and if they have the Admin role
     this.isAdmin = this.authService.getUserRole() === 1;
-    console.log(this.authService.getUserRole(), "rol?")
+    console.log('isAdmin:', this.isAdmin);
 
-    this.userService.getUsers().subscribe((users) => (this.user = users));
+    if (!this.authService.isAuthenticated()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+
+    this.userService.getUsers().subscribe({
+      next: (data) => {
+        console.log('fetchedusers', data);
+        this.users = data; 
+      },
+      error: (err) => {
+        console.error('erroor', err);
+      }
+    });
   }
 
   onDelete(userId: number): void {
     this.userService.deleteUser(userId);
   }
-  
+
   navigateToAdd(): void {
     if (this.isAdmin) {
       this.router.navigate(['/users/add']);

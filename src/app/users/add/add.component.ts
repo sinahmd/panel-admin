@@ -6,24 +6,25 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MatCardContent, MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { Observer } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
 @Component({
   selector: 'app-add',
-  imports: [FormsModule, MatCardContent, ReactiveFormsModule ,MatCardModule, MatButtonModule],
+  imports: [FormsModule, MatInputModule,
+     MatCardContent, ReactiveFormsModule ,
+     MatCardModule, MatButtonModule,
+     MatSnackBarModule,MatSelectModule ,
+    MatFormFieldModule,MatIconModule,
+    MatOptionModule ],
   templateUrl: './add.component.html',
   styleUrl: './add.component.scss',
 })
 export class AddComponent {
-  // user: User = {
-  //   id: 0,
-  //   firstName: '',
-  //   lastName: '',
-  //   role: 0,
-  //   nationalCode: '',
-  //   phoneNumber: '',
-  //   username: '',
-  //   password: '',
-  // };
+
 
   constructor(private userService: UserService,
      private router: Router,
@@ -73,8 +74,9 @@ export class AddComponent {
       next: (res) => {
         this.router.navigate(['/users']);
       },
-      error: (err) => {
-        this.openSnackBar(`${err}`)
+      error: (err: any) => {
+        console.log(err,"err")
+        this.openSnackBar(`${err?.error?.error ?? err?.message as String}`)
       },
       complete: () => {},
   }
@@ -86,10 +88,11 @@ export class AddComponent {
     }
     if (this.formGroup.valid) {
       this.userService.addUser(this.formGroup.value).subscribe(this.userObserver)
+    
     }
-    this.router.navigate(['/users']);
+    
   }
-
+}
   // formGroup: FormGroup = new FormGroup<User>({
   //   firstName:  new FormControl("",
   //   {nonNullable: true,
@@ -139,4 +142,4 @@ export class AddComponent {
   //     this.userService.addUser(this.formGroup.value).subscribe(this.userObserver);
   //   }
   // }
-}
+

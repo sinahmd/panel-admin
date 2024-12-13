@@ -1,62 +1,126 @@
+
 mat-card {
-    display: block;
-    padding: 16px;
-    margin: 16px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .user-list-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px;
-    // margin-bottom: 0px;
-    margin-top: 60px;
-    top: 10%;
-    background-color: #ffffff;
-    border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, background-color 0.3s ease;
-  
-    &:hover {
-      transform: translateY(-2px);
-      background-color: #f1f1f1;
-    }
-  }
-  
-  .user-detail {
-    font-size: 14px;
-    color: #333;
-    margin-right: 16px;
-    display: inline-block;
-    text-align: left;
-  }
-  
-  .no-data {
-    text-align: center;
-    font-size: 16px;
-    color: #777;
-    margin-top: 16px;
-  }
-  
-  button {
-    margin-left: 16px;
-    font-size: 14px;
-    background-color: #3f51b5;
-    color: #fff;
-  
-    &:hover {
-      background-color: #303f9f;
-    }
-  }
-  .create-button-list-header {
-    margin-top: -10px;
-  }
-  .mdc-card{
-    margin: 2%;
+  margin: 20px;
+  padding: 20px;
 }
-.mdc-button{
-    margin: 2px;
+
+.create-button-list-header {
+  margin-bottom: 20px; 
+  display: flex;
+  justify-content: flex-start; 
+}
+
+button.create-button-list-header {
+  font-size: 16px;
+  padding: 10px 20px;
+  background-color: #3f51b5; 
+  color: white;
+  border-radius: 5px;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+button.create-button-list-header:hover {
+  background-color: #303f9f; 
+}
+
+
+mat-card-content {
+  padding: 0;
+}
+
+/* Container for individual user items */
+.user-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd; /* Border between rows */
+  transition: background-color 0.3s ease;
+}
+
+/* Different background colors for alternating rows */
+.user-list-item:nth-child(odd) {
+  background-color: #f9f9f9; /* Light gray */
+}
+
+.user-list-item:nth-child(even) {
+  background-color: #ffffff; /* White */
+}
+
+.user-list-item:hover {
+  background-color: #f0f0f0; /* Slightly darker on hover */
+}
+
+/* Style for individual user details */
+.user-detail {
+  font-size: 14px;
+  color: #333;
+  padding-right: 10px; /* Space between details */
+}
+
+/* Style for the edit button */
+button {
+  font-size: 14px;
+  padding: 5px 10px;
+  background-color: #4caf50; /* Green color for edit button */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #388e3c; /* Darker green when hovered */
+}
+
+/* Style when no data is available */
+.no-data {
+  font-size: 16px;
+  color: #666;
+  background-color: #d3d2d2;
+border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .create-button-list-header {
+    margin-bottom: 10px;
+  }
+
+  .user-detail {
+    font-size: 12px;
+  }
+
+  button.create-button-list-header {
+    padding: 8px 15px;
+    font-size: 14px;
+  }
+
+  .user-list-item {
+    font-size: 12px;
+  }
+}
+.cdk-overlay-pane {
+  background-color: white !important;
+}
+
+div#mat-select-0-panel {
+  background-color: white !important;
+}
+
+.mat-mdc-option.mdc-list-item {
+  align-items: center;
+  background-color: white !important;
+}
+
+.cdk-overlay-connected-position-bounding-box {
+  z-index: 99999 !important;
+}
+.mat-mdc-option {
+  display: block;
 }

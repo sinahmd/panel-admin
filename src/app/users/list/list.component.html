@@ -9,19 +9,19 @@
     }
 
     
-    @for(user of user; track user.nationalCode) {
+    @for(item of users; track item.username) {
         <mat-card-content>
     <div  class="user-list-item">
-        <span class="user-detail">NationalCode: {{user.nationalCode}} </span>
-        <span class="user-detail">First Name: {{user.firstName}} </span>
-        <span class="user-detail">Last Name: {{user.lastName}} </span>
-        <button [routerLink]="'/user/edit' + user.nationalCode">Edit</button>
+        <span class="user-detail">NationalCode: {{item.username}} </span>
+        <span class="user-detail">First Name: {{item.password}} </span>
+        <span class="user-detail">Last Name: {{item.role}} </span>
+        <button [routerLink]="'/user/edit' + item.username">Edit</button>
     </div>
 </mat-card-content>
     } @empty {
         <mat-card-content>
         <span class="no-data"> there is no data!</span>
-    </mat-card-content>
+        </mat-card-content>
     }
 </mat-card>
 
