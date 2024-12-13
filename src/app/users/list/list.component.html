@@ -1,0 +1,28 @@
+
+
+
+<mat-card>
+    @if(isAdmin) {
+        <mat-card-header>
+            <button class="create-button-list-header" mat-raised-button color="primary" (click)="navigateToAdd()">Add New</button>
+        </mat-card-header>
+    }
+
+    
+    @for(user of user; track user.nationalCode) {
+        <mat-card-content>
+    <div  class="user-list-item">
+        <span class="user-detail">NationalCode: {{user.nationalCode}} </span>
+        <span class="user-detail">First Name: {{user.firstName}} </span>
+        <span class="user-detail">Last Name: {{user.lastName}} </span>
+        <button [routerLink]="'/user/edit' + user.nationalCode">Edit</button>
+    </div>
+</mat-card-content>
+    } @empty {
+        <mat-card-content>
+        <span class="no-data"> there is no data!</span>
+    </mat-card-content>
+    }
+</mat-card>
+
+<router-outlet />

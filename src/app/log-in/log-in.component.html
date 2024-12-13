@@ -1,0 +1,48 @@
+<mat-card class="login-container">
+  <mat-card-header>
+    <mat-card-title class="login-title">Login</mat-card-title>
+  </mat-card-header>
+  <form [formGroup]="formGroup">
+    <mat-card-content>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="username"
+          name="username"
+          required
+        />
+        @if (formGroup.controls['username'].hasError('required')){
+        <mat-error >
+          user name is required
+        </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="password"
+          formControlName="password"
+          name="password"
+          required
+        />
+        @if (formGroup.controls['password'].hasError('required')){
+        <mat-error> Password is required </mat-error>
+        }
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        (click)="onLogin()"
+        class="login-button"
+      >
+        Login
+      </button>
+    </mat-card-content>
+  </form>
+</mat-card>
