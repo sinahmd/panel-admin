@@ -6,24 +6,27 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
+import { Observable, map, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationGaurdService implements CanActivate {
   constructor(private auth: AutheticationService, private router: Router) {}
-
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): boolean {
-    const requiredRole = route.data['roles']; // Get the required role from route data
-    const currentRole = this.auth.getUserRole();
-    if (this.auth.isAuthenticated() && currentRole === requiredRole) {
-      return true;
-    } else {
-      this.router.navigate(['/login']);
-      return false;
-    }
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    const requiredRole = route.data['roles']; 
+    console.log(requiredRole,"require role")
+    return this.auth.getUserRole().pipe(
+      take(1), 
+      map(currentRole => {
+        
+        if (this.auth.isAuthenticated() && requiredRole === 1) { // TODO: change 1
+          return true;
+        } else {
+          this.router.navigate(['/login']);
+          return false;
+        }
+      })
+    );
   }
 }

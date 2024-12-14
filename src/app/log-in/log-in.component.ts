@@ -84,15 +84,19 @@ export class LogInComponent {
     if (this.formGroup.invalid) {
       this.openSnackBar(`fill the fields`);
     }
-    if(this.formGroup.valid) {
+    // if(this.formGroup.valid) {
     this.auth.login(this.formGroup.value.username, this.formGroup.value.password).subscribe({
+
       next: () => {
-        this.router.navigate(['/users']); 
+        this.auth.getUserRole().subscribe(role => {
+          
+          this.router.navigate(['/users']); 
+        });
       },
-      error: (err) => {
+      error: (err:any) => {
         this.openSnackBar(`Login failed: ${err.error || err.message}`);
       },
     });
-  }
+  // }
   }
 }

@@ -6,7 +6,7 @@ export interface User {
     lastName: FormControl<string>;
     role:FormControl<0 | 1>;
     nationalCode: FormControl<string>;
-    phoneNumber: FormControl<string>;
+    mobile: FormControl<string>;
     username: FormControl<string>;
     password: FormControl<string>;
   }

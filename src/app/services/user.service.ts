@@ -15,19 +15,14 @@ export class UserService {
 
 
   getUsers(): Observable<User[]> {
-    // Check if the user is authenticated and get the token
-    const token = this.auth.getToken();
-    console.log("Token:", token);
+    const sessionId = this.auth.sessionIdSubject.value;
+    if (sessionId) {
+      const headers = new HttpHeaders().set('Authorization', sessionId); // Add session ID to the headers
 
-    if (token) {
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-      // Make HTTP GET request to the backend to get users
-      this.http.get<User[]>('http://localhost:3000/users', { headers }).subscribe({
+      this.http.get<User[]>('http://localhost:3000/api/users', { headers }).subscribe({
         next: (data) => {
-          console.log(data,"data get")
           this.users = data;
-          this.usersSubject.next(this.users); // Update the usersSubject with the fetched data
+          this.usersSubject.next(this.users);
         },
         error: (err) => {
           console.error('Error fetching users:', err);
@@ -35,30 +30,17 @@ export class UserService {
       });
     }
 
-    return this.usersSubject.asObservable(); // Return the observable of the users list
+    return this.usersSubject.asObservable();
   }
-  // getAllUsers(): Observable<User[]> {
-  //   return this.http.get(`sdasd`)
-  // }
 
-  // addUser(user: User): void {
-  //   user.id = this.users.length + 1
-  //   this.users.push(user)
-  //   this.usersSubject.next(this.users);
-  // }
   addUser(user: User): Observable<any> {
-    // Get the JWT token from the Authentication service
-    const token = this.auth.getToken();
-    console.log(token,"token")
-    // Set up headers with Authorization
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    console.log(this.auth.sessionIdSubject,"this auth")
+    const sessionId = this.auth.sessionIdSubject.value as string;
+    console.log(sessionId,"session id in add")
+    const headers = new HttpHeaders().set('Authorization', sessionId);
 
-    // Send the request with the headers
-    return this.http.post('http://localhost:3000/users', user, { headers, responseType: 'json' });
+    return this.http.post('http://localhost:3000/api/users', user, { headers });
   }
-//   addUser(user: User): Observable<any> {
-//     return this.http.post('http://localhost:3000/users', user, { responseType: 'text' });
-// }
   editUser(updatedUser: User): void {
     const index = this.users.findIndex((u) => u.id === updatedUser.id);
     if (index !== -1) {
@@ -67,10 +49,8 @@ export class UserService {
     }
   }
 
-  deleteUser(userId: number): void {
-    this.users = this.users.filter((u) => u.id?.value !== userId); 
-    this.usersSubject.next(this.users);
+  deleteUser(userId: number): Observable<any> {
+    return this.http.delete(`adgagaeg/${userId}`);
   }
-
-
+  
 }

@@ -1,76 +1,89 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, catchError, map } from 'rxjs';
-import { User } from '../../models/user.medel';
+import { BehaviorSubject, Observable, of, catchError, map, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AutheticationService {
-  private readonly apiUrl = 'http://localhost:3000';
+  private apiUrl = 'http://localhost:3000/api/auth';
 
-  private tokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
+  sessionIdSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
   private roleSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0); // 0: Normal user, 1: Admin
 
-  constructor(private http: HttpClient, private router: Router) {  }
-
-
-  get token$(): Observable<string | null> {
-    return this.tokenSubject.asObservable();
+  constructor(private http: HttpClient, private router: Router) {
+    const storedSessionId = localStorage.getItem('sessionId');
+    if (storedSessionId) {
+      this.sessionIdSubject.next(storedSessionId);
+    }
   }
- 
+
+  get sessionId$(): Observable<string | null> {
+    return this.sessionIdSubject.asObservable();
+  }
 
   get role$(): Observable<number> {
     return this.roleSubject.asObservable();
   }
 
-
   login(username: string, password: string): Observable<void> {
-    return this.http.post(`${this.apiUrl}/login`, { username, password }, { withCredentials: true }).pipe(
+    return this.http.post(`${this.apiUrl}`, { username, password }, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
+    }).pipe(
       map((response: any) => {
-        const token = response.token;
-        const role = response.role;
-console.log(token,"token")
-console.log(role,"rolee")
-        this.tokenSubject.next(token);
-        this.roleSubject.next(role);
+        const sessionId = response?.sessionId;
+        if (sessionId) {
+          localStorage.setItem('sessionId', sessionId); 
+          this.sessionIdSubject.next(sessionId);
+          return sessionId; 
+        }
+        throw new Error('Session ID not found');
       }),
-      catchError((err) => {
+      switchMap(sessionId => this.fetchUserRole(sessionId)), 
+      catchError(err => {
         throw new Error('Login failed: ' + err.message);
       })
     );
   }
 
-  logout(): void {
-    this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true }).subscribe(() => {
-      this.tokenSubject.next(null);
-      this.roleSubject.next(0);
-      this.router.navigate(['/login']);
-    });
+  private fetchUserRole(sessionId: string): Observable<void> {
+    const headers = new HttpHeaders().set('Authorization', sessionId);
+    return this.http.get<any>('http://localhost:3000/api/users/current', { headers }).pipe(
+      map(user => {
+        const role = user?.role;
+        console.log('User role fetched:', role);
+        this.roleSubject.next(role);
+      }),
+      catchError(err => {
+        console.error('Error fetching user role:', err);
+        return of(undefined); 
+      })
+    );
   }
 
-
-  // getUsers(): User[] {
-  //   return this.
-  // }
-  getToken(): string | null {
-    console.log(this.tokenSubject,"gettoken")
-    return this.tokenSubject.value;
+  logout(): void {
+    const sessionId = localStorage.getItem('sessionId');
+    if (sessionId) {
+      this.http.post(`${this.apiUrl}/logout`, { sessionId }).subscribe(() => {
+        localStorage.removeItem('sessionId');
+        this.sessionIdSubject.next(null);
+        this.roleSubject.next(0); // Reset role to 0
+        this.router.navigate(['/login']);
+      });
+    }
   }
 
   getHeaders(): HttpHeaders {
-    const token = this.getToken();
-    return new HttpHeaders().set('Authorization', `Bearer ${token || ''}`);
+    const sessionId = this.sessionIdSubject.value;
+    return new HttpHeaders().set('Authorization', sessionId || '');
   }
 
   isAuthenticated(): boolean {
-    console.log(this.tokenSubject.value, "this.tokenSubject.value")
-    return this.tokenSubject.value !== null;
+    return this.sessionIdSubject.value !== null;
   }
 
-  getUserRole(): number {
-    return this.roleSubject.value;
+  getUserRole(): Observable<number> {
+    return this.roleSubject.asObservable();
   }
-
 }

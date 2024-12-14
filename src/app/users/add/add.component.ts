@@ -34,7 +34,7 @@ export class AddComponent {
 
   formGroup: FormGroup = new FormGroup<User>({
 
-    phoneNumber: new FormControl('',
+    mobile: new FormControl('',
     {nonNullable: true,
       validators:[Validators.required]}
       ), 
@@ -82,6 +82,7 @@ export class AddComponent {
   }
 
   onSubmit(): void {
+    console.log(this.formGroup,"formGroup")
     // this.userService.addUser(this.user);
     if (this.formGroup.invalid) {
       this.openSnackBar(`fill the fields`);
