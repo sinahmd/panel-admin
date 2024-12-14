@@ -1,28 +1,54 @@
 
-
-
 <mat-card>
     @if(isAdmin) {
-        <mat-card-header>
-            <button class="create-button-list-header" mat-raised-button color="primary" (click)="navigateToAdd()">Add New</button>
-        </mat-card-header>
-    }
-
-    
-    @for(item of users; track item.username) {
-        <mat-card-content>
-    <div  class="user-list-item">
-        <span class="user-detail">NationalCode: {{item.username}} </span>
-        <span class="user-detail">First Name: {{item.password}} </span>
-        <span class="user-detail">Last Name: {{item.role}} </span>
-        <button [routerLink]="'/user/edit' + item.username">Edit</button>
-    </div>
-</mat-card-content>
-    } @empty {
-        <mat-card-content>
-        <span class="no-data"> there is no data!</span>
-        </mat-card-content>
-    }
+    <mat-card-header>
+        <button class="create-button-list-header" mat-raised-button color="primary" (click)="navigateToAdd()">Add
+            New</button>
+    </mat-card-header>}
+    <mat-card-content>
+        <table border="1" class="user-table">
+            <thead>
+                <tr>
+                    <th>National Code</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(item of users; track item.username; let i = $index) {
+                <tr>
+                    @if(editingStates[i]?.editingIndex !== i){
+                    <ng-container>
+                        <td>{{ item.username }}</td>
+                        <td>{{ item.password }}</td>
+                        <td>{{ item.role }}</td>
+                        <td>
+                            <button mat-raised-button color="accent" class="save-btn" (click)="startEditing(i, item)">Edit</button>
+                            <button mat-raised-button color="warn" class="cancel-btn" (click)="deleteRow(i)">Delete</button>
+                        </td>
+                    </ng-container>
+                    }
+                    @if(editingStates[i]?.editingIndex === i){
+                    <ng-container>
+                        <td><input [(ngModel)]="editingStates[i].editingRow.username" /></td>
+                        <td><input [(ngModel)]="editingStates[i].editingRow.password" /></td>
+                        <td><input [(ngModel)]="editingStates[i].editingRow.role" /></td>
+                        <td>
+                            <button mat-raised-button color="primary" class="save-btn" (click)="saveEditing(i, item)">Save</button>
+                            <button mat-raised-button color="warn" class="cancel-btn" (click)="cancelEditing(i)">Cancel</button>
+                        </td>
+                    </ng-container>
+                    }
+                </tr>
+                }
+                @empty{ <mat-card-content>
+                    <span class="no-data">There is no data available!</span>
+                </mat-card-content>
+                }
+            </tbody>
+        </table>
+    </mat-card-content>
 </mat-card>
 
 <router-outlet />

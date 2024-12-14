@@ -2,97 +2,112 @@
 mat-card {
   margin: 20px;
   padding: 20px;
-}
-
-.create-button-list-header {
-  margin-bottom: 20px; 
-  display: flex;
-  justify-content: flex-start; 
-}
-
-button.create-button-list-header {
-  font-size: 16px;
-  padding: 10px 20px;
-  background-color: #3f51b5; 
-  color: white;
-  border-radius: 5px;
-  border: none;
-  transition: background-color 0.3s ease;
-}
-
-button.create-button-list-header:hover {
-  background-color: #303f9f; 
+  background-color: #f9f9f9;
 }
 
 
-mat-card-content {
-  padding: 0;
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
 }
 
-/* Container for individual user items */
-.user-list-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #ddd; /* Border between rows */
-  transition: background-color 0.3s ease;
-}
 
-/* Different background colors for alternating rows */
-.user-list-item:nth-child(odd) {
-  background-color: #f9f9f9; /* Light gray */
-}
-
-.user-list-item:nth-child(even) {
-  background-color: #ffffff; /* White */
-}
-
-.user-list-item:hover {
-  background-color: #f0f0f0; /* Slightly darker on hover */
-}
-
-/* Style for individual user details */
-.user-detail {
+th, td {
+  padding: 12px 20px;
+  text-align: left;
   font-size: 14px;
-  color: #333;
-  padding-right: 10px; /* Space between details */
+  border-bottom: 1px solid #ddd;
+  vertical-align: middle;
+  width: 150px; 
 }
 
-/* Style for the edit button */
-button {
-  font-size: 14px;
-  padding: 5px 10px;
-  background-color: #4caf50; /* Green color for edit button */
+
+th {
+  background-color: #00796b;
   color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  font-weight: bold;
 }
+
+
+tr:nth-child(odd) td {
+  background-color: #dee9e7; 
+}
+
+tr:nth-child(even) td {
+  background-color: #ffffff; 
+}
+
+tr:hover td {
+  background-color: #cecccc; 
+}
+
+input {
+  font-size: 14px;
+  padding: 5px;
+  width: 100%; 
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box; 
+  background-color: #fff;
+  color: #000;
+  height: 32px; 
+  text-align: left;
+  margin: 0;
+}
+
 
 button:hover {
-  background-color: #388e3c; /* Darker green when hovered */
+cursor: pointer;
 }
 
-/* Style when no data is available */
-.no-data {
+button.mat-raised-button {
+  font-size: 14px;
+  padding: 5px 10px;
+}
+button {
+&.save-btn {
+  background-color: #4caf50;
+  color: white;
+  border-radius: 2px;
+  border: none;
+  padding: 4px;
+}
+
+&.save-btn:hover {
+  background-color: #194f1b; 
+}
+
+&.cancel-btn {
+  background-color: #f44336;
+  color: white;
+  border-radius: 2px;
+  border: none;
+  padding: 4px;
+  margin-left: 5px;
+}
+
+&.cancel-btn:hover {
+  background-color: #7c1715; 
+}
+}
+.create-button-list-header {
   font-size: 16px;
-  color: #666;
-  background-color: #d3d2d2;
-border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-  text-align: center;
+  padding: 10px 20px;
+  background-color: #3f51b5;
+  color: white;
+  border-radius: 2px;
+  transition: background-color 0.3s ease;
+  border: none;
 }
 
-/* Mobile responsiveness */
-@media (max-width: 600px) {
-  .create-button-list-header {
-    margin-bottom: 10px;
-  }
+.create-button-list-header:hover {
+  background-color: #303f9f;
+}
 
-  .user-detail {
+@media (max-width: 600px) {
+  th, td {
+    padding: 8px 15px;
     font-size: 12px;
   }
 
@@ -101,26 +116,8 @@ border-radius: 10px;
     font-size: 14px;
   }
 
-  .user-list-item {
+  input {
+    padding: 4px;
     font-size: 12px;
   }
-}
-.cdk-overlay-pane {
-  background-color: white !important;
-}
-
-div#mat-select-0-panel {
-  background-color: white !important;
-}
-
-.mat-mdc-option.mdc-list-item {
-  align-items: center;
-  background-color: white !important;
-}
-
-.cdk-overlay-connected-position-bounding-box {
-  z-index: 99999 !important;
-}
-.mat-mdc-option {
-  display: block;
 }

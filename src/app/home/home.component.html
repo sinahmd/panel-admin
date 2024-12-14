@@ -1,1 +1,15 @@
-<p>home works!</p>
+<mat-toolbar class="navbar">
+
+    <span class="spacer"></span>
+    @if(isLoggedIn) {
+    <span routerLink="users">User List</span>
+    }
+    @if(isLoggedIn && isAdmin) {
+    <span routerLink="users/add" >add user</span>
+    }
+    <button mat-button color="warn" (click)="logout()">Logout</button>
+</mat-toolbar>
+
+<list></list>
+
+<router-outlet />
