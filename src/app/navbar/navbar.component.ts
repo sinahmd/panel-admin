@@ -15,7 +15,7 @@ export class NavbarComponent {
   constructor(private authService: AutheticationService, private router: Router) {}
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isAuthenticated();  // Check login status
-    this.isAdmin = this.authService.getUserRole() === 1;   // Check if user is an admin
+    // this.isAdmin = this.authService.getUserRole() === 1;   // Check if user is an admin
   }
   logout(): void {
     this.authService.logout();  

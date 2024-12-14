@@ -1,7 +1,7 @@
 .login-container {
   width: 400px;
   margin: 110px auto;
-  background-color: #8d2014; 
+  background-color: #00796b; 
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -14,7 +14,7 @@
   }
 
   mat-card-header {
-    background-color: #8d2014; 
+    background-color: #00796b; 
     padding: 15px 20px;
     border-radius: 8px 8px 0 0;
   }
@@ -50,14 +50,14 @@
 
   .login-button {
     width: 100%;
-    background-color: #d32f2f;
+    background-color: #0b3833;
     color: white;
     font-size: 16px;
     padding: 10px;
     border-radius: 4px;
 
     &:hover {
-      background-color: #b71c1c; 
+      background-color: #19625a; 
     }
   }
 
@@ -65,7 +65,7 @@
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
   input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 40px #8d2014 inset !important;
+    -webkit-box-shadow: 0 0 0 40px #00796b inset !important;
     -webkit-text-fill-color: white !important;
     -webkit-border-before-color: transparent;
   }

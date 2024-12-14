@@ -71,15 +71,23 @@ export class AddComponent {
   }
 
   userObserver: Observer<any> = {
-      next: (res) => {
-        this.router.navigate(['/users']);
-      },
-      error: (err: any) => {
-        console.log(err,"err")
-        this.openSnackBar(`${err?.error?.error ?? err?.message as String}`)
-      },
-      complete: () => {},
-  }
+    next: (res) => {
+      this.userService.getUsers().subscribe({
+        next: (users) => {
+          console.log('Updated users:', users); 
+          this.router.navigate(['/users']);
+        },
+        error: (err) => {
+          console.error('Error fetching updated users:', err);
+        },
+      });
+    },
+    error: (err: any) => {
+      console.log(err, 'err');
+      this.openSnackBar(`${err?.error?.error ?? err?.message}`);
+    },
+    complete: () => {},
+  };
 
   onSubmit(): void {
     console.log(this.formGroup,"formGroup")

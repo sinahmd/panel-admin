@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { AutheticationService } from '../services/authetication.service';
 import {  MatCardModule } from '@angular/material/card';
 import { ListComponent } from '../users/list/list.component';
@@ -7,7 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-home',
-  imports: [MatCardModule,MatButtonModule,MatToolbarModule,RouterLink,ListComponent, RouterOutlet],
+  imports: [MatCardModule,MatButtonModule,MatToolbarModule,RouterModule, RouterOutlet],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

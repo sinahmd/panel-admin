@@ -10,12 +10,17 @@ export class AutheticationService {
   private apiUrl = 'http://localhost:3000/api/auth';
 
   sessionIdSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
-  private roleSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0); // 0: Normal user, 1: Admin
+  private roleSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0); 
 
   constructor(private http: HttpClient, private router: Router) {
     const storedSessionId = localStorage.getItem('sessionId');
     if (storedSessionId) {
       this.sessionIdSubject.next(storedSessionId);
+    }
+
+    const storedRole = localStorage.getItem('role');
+    if (storedRole) {
+      this.roleSubject.next(Number(storedRole));  
     }
   }
 
@@ -54,6 +59,7 @@ export class AutheticationService {
         const role = user?.role;
         console.log('User role fetched:', role);
         this.roleSubject.next(role);
+        localStorage.setItem('role', String(role));
       }),
       catchError(err => {
         console.error('Error fetching user role:', err);
@@ -67,19 +73,23 @@ export class AutheticationService {
     if (sessionId) {
       this.http.post(`${this.apiUrl}/logout`, { sessionId }).subscribe(() => {
         localStorage.removeItem('sessionId');
+        localStorage.removeItem('role'); 
         this.sessionIdSubject.next(null);
-        this.roleSubject.next(0); // Reset role to 0
+        this.roleSubject.next(0); 
         this.router.navigate(['/login']);
       });
     }
   }
 
   getHeaders(): HttpHeaders {
-    const sessionId = this.sessionIdSubject.value;
+    const sessionId = localStorage.getItem('sessionId');
+    // const sessionId = this.sessionIdSubject.value;
     return new HttpHeaders().set('Authorization', sessionId || '');
   }
 
   isAuthenticated(): boolean {
+    console.log(this.sessionIdSubject.value, "this.sessionIdSubject.value")
+    
     return this.sessionIdSubject.value !== null;
   }
 

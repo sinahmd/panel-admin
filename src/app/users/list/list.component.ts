@@ -56,6 +56,8 @@ export class ListComponent implements OnInit {
         next: (data) => {
           console.log('fetched users:', data);
           this.users = data;
+          console.log(data,"daata")
+          console.log(this.users,"this users")
         },
         error: (err) => {
           console.error('Error fetching users:', err);
@@ -68,7 +70,7 @@ export class ListComponent implements OnInit {
 
   navigateToAdd(): void {
     if (this.isAdmin) {
-      this.router.navigate(['/home/users/add']);
+      this.router.navigate(['/users/add']);
     } else {
       this.router.navigate(['/home/users']);
     }
@@ -81,16 +83,35 @@ export class ListComponent implements OnInit {
     }
   }
 
-  deleteRow(index: number): void {
-    if (confirm('Are you sure you want to delete this user?')) {
-      this.users.splice(index, 1);
-      this.editingStates.splice(index, 1);  
-    }
-  }
+  // deleteRow(index: number, userId: number): void {
+  //   if (confirm('Are you sure you want to delete this user?')) {
+  //     const userId = this.users[index].id;
+
+  //     this.userService.deleteUser(userId).subscribe({
+  //       next: () => {
+  //         console.log('User deleted successfully');
+  //         this.users.splice(index, 1);
+  //       },
+  //       error: (err) => {
+  //         console.error('Error deleting user:', err);
+  //       }
+  //     });
+  //   }
+  // }
 
   saveEditing(index: number, item: any): void {
-    console.log('saved?', item);
+    const updatedUser = this.editingStates[index].editingRow;
 
+    this.userService.updateUser(updatedUser).subscribe({
+      next: (updatedUser) => {
+        console.log('User updated', updatedUser);
+        this.users[index] = updatedUser;
+        this.cancelEditing(index); 
+      },
+      error: (err) => {
+        console.error('Error updating user:', err);
+      }
+    });
   }
   cancelEditing(index: number): void {
     this.editingStates[index] = null; 

@@ -10,19 +10,20 @@ import { AutheticationService } from './authetication.service';
 export class UserService {
   private users: User[] = [];
   private usersSubject: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(this.users);
-
+  private apiUrl = 'http://localhost:3000/api/users';
   constructor(private http: HttpClient,private auth: AutheticationService) { }
 
 
   getUsers(): Observable<User[]> {
     const sessionId = this.auth.sessionIdSubject.value;
     if (sessionId) {
-      const headers = new HttpHeaders().set('Authorization', sessionId); // Add session ID to the headers
+      const headers = new HttpHeaders().set('Authorization', sessionId); 
 
       this.http.get<User[]>('http://localhost:3000/api/users', { headers }).subscribe({
         next: (data) => {
           this.users = data;
           this.usersSubject.next(this.users);
+          return this.users
         },
         error: (err) => {
           console.error('Error fetching users:', err);
@@ -49,8 +50,14 @@ export class UserService {
     }
   }
 
+  updateUser(user: any): Observable<any> {
+    const headers = this.auth.getHeaders();
+    return this.http.put<any>(this.apiUrl, user, { headers });
+  }
+
   deleteUser(userId: number): Observable<any> {
-    return this.http.delete(`adgagaeg/${userId}`);
+    const headers = this.auth.getHeaders();
+    return this.http.delete<any>(`${this.apiUrl}/${userId}`, { headers });
   }
   
 }

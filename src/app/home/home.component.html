@@ -1,4 +1,4 @@
-<mat-toolbar class="navbar">
+<!-- <mat-toolbar class="navbar">
 
     <span class="spacer"></span>
     @if(isLoggedIn) {
@@ -10,6 +10,14 @@
     <button mat-button color="warn" (click)="logout()">Logout</button>
 </mat-toolbar>
 
-<list></list>
+<list></list> -->
+<nav>
+  <ul>
+    <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+    <li><a routerLink="/users" routerLinkActive="active">Users</a></li>
+    <li><a routerLink="/users/add" routerLinkActive="active">Add User</a></li>
+    <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
+  </ul>
+</nav>
 
 <router-outlet />
