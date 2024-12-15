@@ -1,1 +1,25 @@
-<p>product.add works!</p>
+<mat-card class="add-product-container">
+    <mat-card-header>
+      <mat-card-title class="add-product-title">Add Product</mat-card-title>
+    </mat-card-header>
+    <form [formGroup]="formGroup">
+      <mat-card-content>
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" required />
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Code</mat-label>
+          <input matInput formControlName="code" required />
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Weight</mat-label>
+          <input matInput formControlName="weight" required />
+        </mat-form-field>
+  
+        <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">Submit</button>
+      </mat-card-content>
+    </form>
+  </mat-card>

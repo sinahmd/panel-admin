@@ -94,6 +94,12 @@ export class ListComponent implements OnInit {
   saveEditing(index: number, item: any): void {
     const updatedUser = this.editingStates[index].editingRow;
 
+    if (!updatedUser.firstName || !updatedUser.lastName || !updatedUser.role || !updatedUser.nationalCode || !updatedUser.mobile || !updatedUser.password) {
+      this.snackBarService.openSnackBar('Please fill required fields.', false);
+      this.markFieldsAsInvalid(index); 
+      return;
+    }
+
     this.userService.updateUser(updatedUser).subscribe({
       next: (updatedUser) => {
         console.log('User updated', updatedUser);
@@ -107,6 +113,20 @@ export class ListComponent implements OnInit {
       }
     });
   }
+
+  markFieldsAsInvalid(index: number): void {
+    const user = this.editingStates[index].editingRow;
+    
+    this.editingStates[index].invalidFields = {
+      firstName: !user.firstName,
+      lastName: !user.lastName,
+      role: !user.role,
+      nationalCode: !user.nationalCode,
+      mobile: !user.mobile,
+      password: !user.password
+    };
+  }
+
   cancelEditing(index: number): void {
     this.editingStates[index] = null;
   }

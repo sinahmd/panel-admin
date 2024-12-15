@@ -69,10 +69,9 @@ export class AddComponent implements OnInit {
     this.userService.addUser(newUser).subscribe({
       next: (user) => {
         this.snackBarService.openSnackBar('User created successfully!', true);
-        this.router.navigate(['/users'], { queryParams: { created: true } });
+        this.router.navigate(['/users']);
       },
       error: (err) => {
-        console.error('Error creating user:', err);
         this.snackBarService.openSnackBar('Error creating user', false);
       },
     });

@@ -68,18 +68,26 @@ export class AutheticationService {
     );
   }
 
+  // logout(): void {
+  //   const sessionId = localStorage.getItem('sessionId');
+  //   if (sessionId) {
+  //     this.http.post(`${this.apiUrl}/logout`, { sessionId }).subscribe(() => {
+  //       localStorage.removeItem('sessionId');
+  //       localStorage.removeItem('role'); 
+  //       this.sessionIdSubject.next(null);
+  //       this.roleSubject.next(0); 
+  //       this.router.navigate(['/login']);
+  //     });
+  //   }
+  // }
   logout(): void {
-    const sessionId = localStorage.getItem('sessionId');
-    if (sessionId) {
-      this.http.post(`${this.apiUrl}/logout`, { sessionId }).subscribe(() => {
-        localStorage.removeItem('sessionId');
-        localStorage.removeItem('role'); 
-        this.sessionIdSubject.next(null);
-        this.roleSubject.next(0); 
-        this.router.navigate(['/login']);
-      });
-    }
+    localStorage.removeItem('sessionId');
+    localStorage.removeItem('role');
+    this.sessionIdSubject.next(null);
+    this.roleSubject.next(0);
+    this.router.navigate(['/login']);
   }
+
 
   getHeaders(): HttpHeaders {
     const sessionId = localStorage.getItem('sessionId');

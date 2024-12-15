@@ -57,9 +57,15 @@
           <ng-container>
             <td>
               <input [(ngModel)]="editingStates[i].editingRow.firstName" />
+              @if(editingStates[i]?.invalidFields?.firstName){
+              <div class="error-message">This field should be filled</div>
+              }
             </td>
             <td>
               <input [(ngModel)]="editingStates[i].editingRow.lastName" />
+              @if(editingStates[i]?.invalidFields?.lastName){
+              <div class="error-message">This field should be filled</div>
+              }
             </td>
             <td><input [(ngModel)]="editingStates[i].editingRow.role" /></td>
             <td>
@@ -105,4 +111,3 @@
     </table>
   </mat-card-content>
 </mat-card>
-

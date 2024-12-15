@@ -1,7 +1,9 @@
+import { FormControl } from "@angular/forms";
+
 export interface Product {
-    id: number;
-    name: string;
-    code: string;
-    weight: number;
+    id: FormControl<number>;
+    name: FormControl<string>;
+    code: FormControl<string>;
+    weight: FormControl<number>;
   }
     

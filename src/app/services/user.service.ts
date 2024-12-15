@@ -42,6 +42,7 @@ export class UserService {
 
     return this.http.post(this.apiUrl, user, { headers });
   }
+
   editUser(updatedUser: User): void {
     const index = this.users.findIndex((u) => u.id === updatedUser.id);
     if (index !== -1) {

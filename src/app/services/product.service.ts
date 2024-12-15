@@ -47,5 +47,4 @@ export class ProductService {
     const headers = this.auth.getHeaders();
     return this.http.put<any>(this.apiUrl, product, { headers });
   }
-  //'http://localhost:3000/api/products'
 }
