@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { AutheticationService } from '../../services/authetication.service';
 import { MatCard, MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../../models/user.medel';
+import { SnackBarService } from '../../services/snackbar.service';
 
 @Component({
   selector: 'list',
-  imports: [RouterOutlet, RouterModule, CommonModule, FormsModule, MatCard, MatCardModule],
+  imports: [ RouterModule, CommonModule, FormsModule, MatCard, MatCardModule],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
 })
@@ -17,12 +18,13 @@ export class ListComponent implements OnInit {
 
   users: User[] = []
   isAdmin = false
-  editingStates: any[] = []; 
+  editingStates: any[] = [];
 
   constructor(
     private userService: UserService,
     private authService: AutheticationService,
-    private router: Router
+    private router: Router,
+    private snackBarService: SnackBarService
   ) { }
   
   ngOnInit(): void {
@@ -33,13 +35,13 @@ export class ListComponent implements OnInit {
 
     this.authService.getUserRole().subscribe({
       next: (role) => {
-        console.log(role, "role in list");  
+        console.log(role, "role in list");
         this.isAdmin = role === 1;
-        console.log('isAdmin:', this.isAdmin); 
+        console.log('isAdmin:', this.isAdmin);
       },
       error: (err) => {
         console.error('Error fetching user role:', err);
-        this.router.navigate(['/login']); 
+        this.router.navigate(['/login']);
       }
     });
 
@@ -48,8 +50,8 @@ export class ListComponent implements OnInit {
         next: (data) => {
           console.log('fetched users:', data);
           this.users = data;
-          console.log(data,"daata")
-          console.log(this.users,"this users")
+          console.log(data, "daata")
+          console.log(this.users, "this users")
         },
         error: (err) => {
           console.error('Error fetching users:', err);
@@ -96,15 +98,16 @@ export class ListComponent implements OnInit {
       next: (updatedUser) => {
         console.log('User updated', updatedUser);
         this.users[index] = updatedUser;
-        this.cancelEditing(index); 
+        this.cancelEditing(index);
+        this.snackBarService.openSnackBar('Updated successfully', true)
       },
       error: (err) => {
-        console.error('Error updating user:', err);
+        this.snackBarService.openSnackBar(`Updated failed: ${err.error || err.message}`, false);
+
       }
     });
   }
   cancelEditing(index: number): void {
-    this.editingStates[index] = null; 
+    this.editingStates[index] = null;
   }
-
 }

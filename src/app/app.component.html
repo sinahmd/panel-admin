@@ -1,13 +1,15 @@
 @if(isLoggedIn && !isLoginPage) {
 <nav>
-    <ul class="navbar">
-      <li><a routerLink="/users" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Users List</a></li>
-      <li><a routerLink="/users/add" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Add User</a></li>
-      <li><a routerLink="/products" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Product List</a></li>
-      <li (click)="logout()"><a>Logout</a></li>
+  <ul class="navbar">
+    <li><a routerLink="/users" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Users List</a></li>
+    @if(isAdmin) {<li><a routerLink="/users/add" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Add
+        User</a></li>}
+    <li><a routerLink="/products" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Product List</a>
+    </li>
+    <li (click)="logout()"><a>Logout</a></li>
 
-    </ul>
-  </nav>
+  </ul>
+</nav>
 }
 
 <router-outlet />

@@ -43,62 +43,50 @@ export class LogInComponent {
   constructor(
     private auth: AutheticationService,
     private router: Router,
-    userService: UserService,
     private snackBar: MatSnackBar,
-    private fb: FormBuilder
-  ) {
-    // this.loginForm = this.fb.group({
-    //   username: ['', [Validators.required]], // Username is required
-    //   password: ['', [Validators.required]], // Password is required
-    // });
-  }
+  ) { }
   formGroup: FormGroup = new FormGroup<Login>({
     username: new FormControl("",
-    {nonNullable: true,
-      validators:[Validators.required]}
-      ),
-      password: new FormControl("",
-      {nonNullable: true,
-        validators:[Validators.required]}
-      )
+      {
+        nonNullable: true,
+        validators: [Validators.required]
+      }
+    ),
+    password: new FormControl("",
+      {
+        nonNullable: true,
+        validators: [Validators.required]
+      }
+    )
   })
-  openSnackBar(message: string, isSuccess: boolean): void {
-    const panelClass = isSuccess ? 'success-snackbar' : 'error-snackbar';
-    this.snackBar.open(message, 'close', {
-      duration: 222000,
-      panelClass: [isSuccess ? 'success-snackbar' : 'error-snackbar'],
+  openSnackBar(message: string, isSuccuss: boolean): void {
+    const planeClass = isSuccuss ? "succuss-snackbar" : "error-snackbar"
+    this.snackBar.open(message, 'Close', {
+      duration: 2000,
+      panelClass: [planeClass],
     });
   }
-
-  // logInObserver: Observer<any> ={
-  //   next: () =>{
-  //     this.router.navigate(['/users']);
-  //   },
-  //   error: (err) => {
-  //     this.openSnackBar(`Login failed: ${err.error || err.message}`);
-  //   },
-  // }
 
   onLogin(): void {
     console.log(this.formGroup, "valid");
-   
+
     if (this.formGroup.invalid) {
       this.openSnackBar(`fill the fields`, false);
     }
-    // if(this.formGroup.valid) {
-    this.auth.login(this.formGroup.value.username, this.formGroup.value.password).subscribe({
+    if (this.formGroup.valid) {
+      this.auth.login(this.formGroup.value.username, this.formGroup.value.password).subscribe({
 
-      next: () => {
-        this.auth.getUserRole().subscribe(role => {
-          
-          this.router.navigate(['/users']);
-          this.openSnackBar("Login successfully", true)
-        });
-      },
-      error: (err:any) => {
-        this.openSnackBar(`Login failed: ${err.error || err.message}`, false);
-      },
-    });
-  // }
+        next: () => {
+          this.auth.getUserRole().subscribe(role => {
+
+            this.router.navigate(['/users']);
+            this.openSnackBar('Logedin successfully', true)
+          });
+        },
+        error: (err: any) => {
+          this.openSnackBar(`Login failed: ${err || err.error || err.message}`, false);
+        },
+      });
+    }
   }
 }

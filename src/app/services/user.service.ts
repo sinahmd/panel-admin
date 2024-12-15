@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../../models/user.medel';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AutheticationService } from './authetication.service';
 

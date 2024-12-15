@@ -2,34 +2,35 @@
 
 html,
 body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+    height: 100%;
 }
 
 body {
-  background-color: #cdd5d5;
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.error-snackbar {
+    background-color: #900909;
+    color: white;
+    font-weight: bold;
+}
+
+body {
+    background-color: #cdd5d5;
 }
 
 .cdk-global-overlay-wrapper,
 .cdk-overlay-container {
-  z-index: 10000 !important;
+    z-index: 10000 !important;
 }
 
-.success-snackbar {
-  background-color: #124e12;
-  color: #cdcdcd;
-  .mat-icon-button:hover {
-    color: #124e12;
-  }
+.succuss-snackbar {
+    background-color: #0d3f0d;
+    color: #cdd5d5;
 }
 
 .error-snackbar {
-  background-color: #591010;
-  color: #cdcdcd;
-  .mat-icon-button:hover {
-    color: #591010;
-  }
+    background-color: #550f0f;
+    color: #cdd5d5;
 }

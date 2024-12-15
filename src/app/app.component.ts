@@ -24,21 +24,27 @@ import { filter } from 'rxjs';
 })
 export class AppComponent {
   title = 'crud';
-  isLoggedIn = false
+  isLoggedIn = false;
   isLoginPage: boolean = false;
+  isAdmin = false;
 
-constructor(private auth: AutheticationService,private router: Router) {}
+  constructor(private auth: AutheticationService, private router: Router) { }
   ngOnInit(): void {
+    this.auth.getUserRole().subscribe({
+      next: (role) =>{
+        this.isAdmin = role === 1
+      }
+    })
     this.isLoggedIn = this.auth.isAuthenticated()
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event) => {
-        this.isLoginPage = this.router.url === '/login';  
+        this.isLoginPage = this.router.url === '/login';
       });
   }
 
   logout() {
-    this.auth.logout(); 
+    this.auth.logout();
     this.router.navigate(['/login']);
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { User } from '../../../models/user.medel';
@@ -18,6 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
+import { SnackBarService } from '../../services/snackbar.service';
 @Component({
   selector: 'app-add',
   imports: [
@@ -36,81 +37,44 @@ import { MatInputModule } from '@angular/material/input';
   templateUrl: './add.component.html',
   styleUrl: './add.component.scss',
 })
-export class AddComponent {
+export class AddComponent implements OnInit {
+  formGroup!: FormGroup;
+
   constructor(
     private userService: UserService,
-    private router: Router,
-    private snackBar: MatSnackBar
+    private snackBarService: SnackBarService,
+    private router: Router
   ) {}
-  ngOnInit(): void {}
 
-  formGroup: FormGroup = new FormGroup<User>({
-    mobile: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-    username: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-    password: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-    firstName: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-    lastName: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-    role: new FormControl(0, {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-    nationalCode: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-  });
-  openSnackBar(message: string): void {
-    this.snackBar.open(message, 'Close', {
-      duration: 2000,
-      panelClass: ['error-snackbar'],
+  ngOnInit(): void {
+    this.formGroup = new FormGroup({
+      firstName: new FormControl('', [Validators.required]),
+      lastName: new FormControl('', [Validators.required]),
+      username: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
+      role: new FormControl(0, [Validators.required]),
+      nationalCode: new FormControl('', [Validators.required]),
+      mobile: new FormControl('', [Validators.required]),
     });
   }
 
-  userObserver: Observer<any> = {
-    next: (res) => {
-      this.userService.getUsers().subscribe({
-        next: (users) => {
-          console.log('Updated users:', users);
-          this.router.navigate(['/users']);
-        },
-        error: (err) => {
-          console.error('Error fetching updated users:', err);
-        },
-      });
-    },
-    error: (err: any) => {
-      console.log(err, 'err');
-      this.openSnackBar(`${err?.error?.error ?? err?.message}`);
-    },
-    complete: () => {},
-  };
-
   onSubmit(): void {
-    console.log(this.formGroup, 'formGroup');
-    // this.userService.addUser(this.user);
     if (this.formGroup.invalid) {
-      this.openSnackBar(`fill the fields`);
+      this.snackBarService.openSnackBar('Please fill in all fields', false);
+      return;
     }
-    if (this.formGroup.valid) {
-      this.userService
-        .addUser(this.formGroup.value)
-        .subscribe(this.userObserver);
-    }
+
+    const newUser: User = this.formGroup.value;
+
+    this.userService.addUser(newUser).subscribe({
+      next: (user) => {
+        this.snackBarService.openSnackBar('User created successfully!', true);
+        this.router.navigate(['/users'], { queryParams: { created: true } });
+      },
+      error: (err) => {
+        console.error('Error creating user:', err);
+        this.snackBarService.openSnackBar('Error creating user', false);
+      },
+    });
   }
 }
-
