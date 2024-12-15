@@ -1,0 +1,124 @@
+
+mat-card {
+    margin: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  
+  .user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  
+  th, td {
+    padding: 12px 20px;
+    text-align: left;
+    font-size: 14px;
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
+    width: 150px; 
+  }
+  
+  
+  th {
+    background-color: #00796b;
+    color: white;
+    font-weight: bold;
+  }
+  
+  
+  tr:nth-child(odd) td {
+    background-color: #dee9e7; 
+  }
+  
+  tr:nth-child(even) td {
+    background-color: #ffffff; 
+  }
+  
+  tr:hover td {
+    background-color: #cecccc; 
+  }
+  
+  input {
+    font-size: 14px;
+    padding: 5px;
+    width: 100%; 
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box; 
+    background-color: #fff;
+    color: #000;
+    height: 32px; 
+    text-align: left;
+    margin: 0;
+  }
+  
+  
+  button:hover {
+  cursor: pointer;
+  }
+  
+  button.mat-raised-button {
+    font-size: 14px;
+    padding: 5px 10px;
+  }
+  button {
+  &.save-btn {
+    background-color: #4caf50;
+    color: white;
+    border-radius: 2px;
+    border: none;
+    padding: 4px;
+  }
+  
+  &.save-btn:hover {
+    background-color: #194f1b; 
+  }
+  
+  &.cancel-btn {
+    background-color: #f44336;
+    color: white;
+    border-radius: 2px;
+    border: none;
+    padding: 4px;
+    margin-left: 5px;
+  }
+  
+  &.cancel-btn:hover {
+    background-color: #7c1715; 
+  }
+  }
+  .create-button-list-header {
+    font-size: 16px;
+    padding: 10px 20px;
+    background-color: #00796b;
+    color: white;
+    border-radius: 2px;
+    transition: background-color 0.3s ease;
+    border: none;
+  }
+  
+  .create-button-list-header:hover {
+    background-color: #083731;
+  }
+  
+  @media (max-width: 600px) {
+    th, td {
+      padding: 8px 15px;
+      font-size: 12px;
+    }
+  
+    button.create-button-list-header {
+      padding: 8px 15px;
+      font-size: 14px;
+    }
+  
+    input {
+      padding: 4px;
+      font-size: 12px;
+    }
+  }
+  

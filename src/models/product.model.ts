@@ -4,4 +4,4 @@ export interface Product {
     code: string;
     weight: number;
   }
-  
+    

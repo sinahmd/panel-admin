@@ -34,13 +34,13 @@ export class UserService {
     return this.usersSubject.asObservable();
   }
 
-  addUser(user: User): Observable<any> {
+  addUser(user: User): Observable<any> { // TODO : fix any
     console.log(this.auth.sessionIdSubject,"this auth")
     const sessionId = this.auth.sessionIdSubject.value as string;
     console.log(sessionId,"session id in add")
     const headers = new HttpHeaders().set('Authorization', sessionId);
 
-    return this.http.post('http://localhost:3000/api/users', user, { headers });
+    return this.http.post(this.apiUrl, user, { headers });
   }
   editUser(updatedUser: User): void {
     const index = this.users.findIndex((u) => u.id === updatedUser.id);

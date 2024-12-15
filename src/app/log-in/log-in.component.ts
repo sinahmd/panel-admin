@@ -36,7 +36,7 @@ import { Observer } from 'rxjs';
     MatCardModule,
   ],
   templateUrl: './log-in.component.html',
-  styleUrl: './log-in.component.scss',
+  styleUrls: ['./log-in.component.scss'],
 })
 export class LogInComponent {
 
@@ -62,10 +62,11 @@ export class LogInComponent {
         validators:[Validators.required]}
       )
   })
-  openSnackBar(message: string): void {
-    this.snackBar.open(message, 'Close', {
-      duration: 2000,
-      panelClass: ['error-snackbar'],
+  openSnackBar(message: string, isSuccess: boolean): void {
+    const panelClass = isSuccess ? 'success-snackbar' : 'error-snackbar';
+    this.snackBar.open(message, 'close', {
+      duration: 222000,
+      panelClass: [isSuccess ? 'success-snackbar' : 'error-snackbar'],
     });
   }
 
@@ -82,7 +83,7 @@ export class LogInComponent {
     console.log(this.formGroup, "valid");
    
     if (this.formGroup.invalid) {
-      this.openSnackBar(`fill the fields`);
+      this.openSnackBar(`fill the fields`, false);
     }
     // if(this.formGroup.valid) {
     this.auth.login(this.formGroup.value.username, this.formGroup.value.password).subscribe({
@@ -90,11 +91,12 @@ export class LogInComponent {
       next: () => {
         this.auth.getUserRole().subscribe(role => {
           
-          this.router.navigate(['/users']); 
+          this.router.navigate(['/users']);
+          this.openSnackBar("Login successfully", true)
         });
       },
       error: (err:any) => {
-        this.openSnackBar(`Login failed: ${err.error || err.message}`);
+        this.openSnackBar(`Login failed: ${err.error || err.message}`, false);
       },
     });
   // }

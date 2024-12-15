@@ -5,6 +5,7 @@ import { AutheticationService } from '../../services/authetication.service';
 import { MatCard, MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { User } from '../../../models/user.medel';
 
 @Component({
   selector: 'list',
@@ -14,7 +15,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ListComponent implements OnInit {
 
-  users: any[] = []
+  users: User[] = []
   isAdmin = false
   editingStates: any[] = []; 
 
@@ -23,15 +24,6 @@ export class ListComponent implements OnInit {
     private authService: AutheticationService,
     private router: Router
   ) { }
-  // ngOnInit(){
-  //   this.userService.getUsers().subscribe({
-  //     next: (d) => {
-  //       console.log(d)
-  //       return this.users = d
-  //     }
-  //   })
-  // }
-
   
   ngOnInit(): void {
     if (!this.authService.isAuthenticated()) {
@@ -71,8 +63,6 @@ export class ListComponent implements OnInit {
   navigateToAdd(): void {
     if (this.isAdmin) {
       this.router.navigate(['/users/add']);
-    } else {
-      this.router.navigate(['/home/users']);
     }
   }
 

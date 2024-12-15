@@ -1,0 +1,124 @@
+<!-- <mat-card>
+    <mat-card-content>
+        <table border="1" class="user-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Code</th>
+                <th>Weight</th>               
+              </tr>
+            </thead>
+            <tbody>
+              @for(item of products; track item.id; let i = $index) {
+              <tr>
+                @if(editingStates[i]?.editingIndex !== i){
+                <ng-container>
+                  <td>{{ item.name }}</td>
+                  <td>{{ item.code }}</td>
+                  <td>{{ item.weight }}</td>
+                 
+                  <td>
+                    <button
+                      mat-raised-button
+                      color="accent"
+                      class="save-btn"
+                      (click)="startEditing(i, item)"
+                    >
+                      Edit
+                    </button>
+                    <button mat-raised-button color="warn" class="cancel-btn">
+                      Delete
+                    </button>
+                  </td>
+                  
+                </ng-container>
+            }
+        }
+    </mat-card-content>
+
+</mat-card> -->
+
+
+
+<mat-card>
+    <mat-card-header>
+      <button
+        class="create-button-list-header"
+        mat-raised-button
+        (click)="navigateToAdd()"
+      >
+        Add New
+      </button> </mat-card-header
+    >
+    <mat-card-content>
+      <table border="1" class="user-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Weight</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(item of products; track item.id; let i = $index) {
+          <tr>
+            @if(editingStates[i]?.editingIndex !== i){
+            <ng-container>
+              <td>{{ item.name }}</td>
+              <td>{{ item.code }}</td>
+              <td>{{ item.weight }}</td>
+              <td>
+                <button
+                  mat-raised-button
+                  color="accent"
+                  class="save-btn"
+                  (click)="startEditing(i, item)"
+                >
+                  Edit
+                </button>
+                <button mat-raised-button color="warn" class="cancel-btn">
+                  Delete
+                </button>
+              </td>
+            </ng-container>
+            } @if(editingStates[i]?.editingIndex === i){
+            <ng-container>
+              <td>
+                <input [(ngModel)]="editingStates[i].editingRow.name" />
+              </td>
+              <td>
+                <input [(ngModel)]="editingStates[i].editingRow.code" />
+              </td>
+              <td><input [(ngModel)]="editingStates[i].editingRow.weight" /></td>
+              
+              <td>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  class="save-btn"
+                  (click)="saveEditing(i, item)"
+                >
+                  Save
+                </button>
+                <button
+                  mat-raised-button
+                  color="warn"
+                  class="cancel-btn"
+                  (click)="cancelEditing(i)"
+                >
+                  Cancel
+                </button>
+              </td>
+            </ng-container>
+            }
+          </tr>
+          } @empty{
+          <mat-card-content>
+            <span class="no-data">There is no data available!</span>
+          </mat-card-content>
+          }
+        </tbody>
+      </table>
+    </mat-card-content>
+  </mat-card>

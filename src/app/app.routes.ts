@@ -5,7 +5,8 @@ import { AuthenticationGaurdService } from './services/authentication.gaurd.serv
 import { ListComponent } from './users/list/list.component';
 import { AddComponent } from './users/add/add.component';
 import { HomeComponent } from './home/home.component';
-import { EditComponent } from './users/edit/edit.component';
+import { ProductListComponent } from './product.list/product.list.component';
+import { ProductAddComponent } from './product.add/product.add.component';
 
 // export const routes: Routes = [
 //     { path: 'login', component: LogInComponent },
@@ -29,9 +30,11 @@ export const routes: Routes = [
   { path: 'login', component: LogInComponent },
   { path: 'users', component: ListComponent },
   { path: 'users/add', component: AddComponent, canActivate: [AuthenticationGaurdService], data: { roles: 1} },
-  { path: 'users/edit/:id', component: EditComponent, canActivate: [AuthenticationGaurdService] },
+  // { path: 'users/edit/:id', component: EditComponent, canActivate: [AuthenticationGaurdService], data: { roles: 1} },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, canActivate: [AuthenticationGaurdService] },
+  { path: 'products', component: ProductListComponent},
+  { path: 'products/add', component: ProductAddComponent}
 ];
   @NgModule({
     imports: [RouterModule.forRoot(routes)],
