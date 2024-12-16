@@ -65,7 +65,6 @@ export class LogInComponent {
   }
 
   onLogin(): void {
-    console.log(this.formGroup, "valid");
 
     if (this.formGroup.invalid) {
       this.openSnackBar(`fill the fields`, false);

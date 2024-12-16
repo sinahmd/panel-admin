@@ -46,7 +46,6 @@ export class ProductAddComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.formGroup)
     if (this.formGroup.invalid) {
       this.snackBarService.openSnackBar('Please fill in all fields', false);
       return;

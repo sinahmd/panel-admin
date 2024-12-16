@@ -57,7 +57,6 @@ export class AutheticationService {
     return this.http.get<any>('http://localhost:3000/api/users/current', { headers }).pipe(
       map(user => {
         const role = user?.role;
-        console.log('User role fetched:', role);
         this.roleSubject.next(role);
         localStorage.setItem('role', String(role));
       }),
@@ -95,9 +94,7 @@ export class AutheticationService {
     return new HttpHeaders().set('Authorization', sessionId || '');
   }
 
-  isAuthenticated(): boolean {
-    console.log(this.sessionIdSubject.value, "this.sessionIdSubject.value")
-    
+  isAuthenticated(): boolean {    
     return this.sessionIdSubject.value !== null;
   }
 

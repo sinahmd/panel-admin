@@ -27,7 +27,6 @@ export class ProductListComponent {
     if (this.authService.isAuthenticated()) {
       this.productService.getProducts().subscribe({
         next: (data) => {
-          console.log(data, 'data');
           this.products = data;
         },
       });
@@ -49,7 +48,6 @@ export class ProductListComponent {
 
     this.productService.updateProduct(updatedProduct).subscribe({
       next: (updatedProduct) => {
-        console.log('User updated', updatedProduct);
         this.products[index] = updatedProduct;
         this.cancelEditing(index);
       },

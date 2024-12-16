@@ -35,9 +35,7 @@ export class UserService {
   }
 
   addUser(user: User): Observable<any> { // TODO : fix any
-    console.log(this.auth.sessionIdSubject,"this auth")
     const sessionId = this.auth.sessionIdSubject.value as string;
-    console.log(sessionId,"session id in add")
     const headers = new HttpHeaders().set('Authorization', sessionId);
 
     return this.http.post(this.apiUrl, user, { headers });
