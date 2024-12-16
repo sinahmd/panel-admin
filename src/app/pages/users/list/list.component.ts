@@ -62,46 +62,16 @@ export class ListComponent implements OnInit {
     }
   }
 
-
-  startEditing(index: number, item: any): void {
-    if (!this.editingStates[index]) {
-      this.editingStates[index] = { editingIndex: index, editingRow: { ...item } };
+  navigateToEdit(userId: number): void {
+    if (this.isAdmin) {
+      this.router.navigate([`/users/edit/${userId}`]);
+    } else {
+      this.snackBarService.openSnackBar('you can not edit.', false);
     }
   }
-  // TODO: ask for add it or not?
-  // deleteRow(index: number, userId: number): void {
-  //   if (confirm('Are you sure you want to delete this user?')) {
-  //     const userId = this.users[index].id;
 
-  //     this.userService.deleteUser(userId).subscribe({
-  //       next: () => {
-  //         console.log('User deleted successfully');
-  //         this.users.splice(index, 1);
-  //       },
-  //       error: (err) => {
-  //         console.error('Error deleting user:', err);
-  //       }
-  //     });
-  //   }
-  // }
-
-  saveEditing(index: number, item: any): void {
-    const updatedUser = this.editingStates[index].editingRow;
-
-    this.userService.updateUser(updatedUser).subscribe({
-      next: (updatedUser) => {
-        this.users[index] = updatedUser;
-        this.cancelEditing(index);
-        this.snackBarService.openSnackBar('Updated successfully', true)
-      },
-      error: (err) => {
-        this.snackBarService.openSnackBar(`Updated failed: ${err.error || err.message}`, false);
-      }
-    });
+  startEditing(userId: number): void {
+    this.router.navigate([`/users/edit/${userId}`]);
   }
-
-
-  cancelEditing(index: number): void {
-    this.editingStates[index] = null;
-  }
+  
 }

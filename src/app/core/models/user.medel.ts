@@ -1,7 +1,7 @@
 import { FormControl } from "@angular/forms";
 
 export interface User {
-    id?: FormControl<number>;
+    id?: number;
     firstName:FormControl<string>;
     lastName: FormControl<string>;
     role:FormControl<0 | 1>;

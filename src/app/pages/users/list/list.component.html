@@ -1,16 +1,15 @@
+
+
+
 <mat-card>
   @if(isAdmin) {
   <mat-card-header>
-    <button
-      class="create-button-list-header"
-      mat-raised-button
-      (click)="navigateToAdd()"
-    >
+    <button class="create-button-list-header" mat-raised-button (click)="navigateToAdd()">
       Add New
-    </button> </mat-card-header
-  >}
+    </button> </mat-card-header>}
+
   <mat-card-content>
-    <table border="1" class="user-table">
+    <table class="user-table">
       <thead>
         <tr>
           <th>First Name</th>
@@ -28,81 +27,23 @@
       <tbody>
         @for(item of users; track item.username; let i = $index) {
         <tr>
-          @if(editingStates[i]?.editingIndex !== i){
-          <ng-container>
-            <td>{{ item.firstName }}</td>
-            <td>{{ item.lastName }}</td>
-            <td>{{ item.role }}</td>
-            <td>{{ item.nationalCode }}</td>
-            <td>{{ item.mobile }}</td>
-            <td>{{ item.username }}</td>
-            <td>{{ item.password }}</td>
-            @if(isAdmin){
-            <td>
-              <button
-                mat-raised-button
-                color="accent"
-                class="save-btn"
-                (click)="startEditing(i, item)"
-              >
-                Edit
-              </button>
-              <button mat-raised-button color="warn" class="cancel-btn">
-                Delete
-              </button>
-            </td>
-            }
-          </ng-container>
-          } @if(editingStates[i]?.editingIndex === i){
-          <ng-container>
-            <td>
-              <input [(ngModel)]="editingStates[i].editingRow.firstName" />
-              @if(editingStates[i]?.invalidFields?.firstName){
-              <div class="error-message">This field should be filled</div>
-              }
-            </td>
-            <td>
-              <input [(ngModel)]="editingStates[i].editingRow.lastName" />
-              @if(editingStates[i]?.invalidFields?.lastName){
-              <div class="error-message">This field should be filled</div>
-              }
-            </td>
-            <td><input [(ngModel)]="editingStates[i].editingRow.role" /></td>
-            <td>
-              <input [(ngModel)]="editingStates[i].editingRow.nationalCode" />
-            </td>
-            <td><input [(ngModel)]="editingStates[i].editingRow.mobile" /></td>
-            <td>
-              <input
-                disabled
-                [(ngModel)]="editingStates[i].editingRow.username"
-              />
-            </td>
-            <td>
-              <input [(ngModel)]="editingStates[i].editingRow.password" />
-            </td>
-            <td>
-              <button
-                mat-raised-button
-                color="primary"
-                class="save-btn"
-                (click)="saveEditing(i, item)"
-              >
-                Save
-              </button>
-              <button
-                mat-raised-button
-                color="warn"
-                class="cancel-btn"
-                (click)="cancelEditing(i)"
-              >
-                Cancel
-              </button>
-            </td>
-          </ng-container>
+          <td>{{ item.firstName }}</td>
+          <td>{{ item.lastName }}</td>
+          <td>{{ item.role }}</td>
+          <td>{{ item.nationalCode }}</td>
+          <td>{{ item.mobile }}</td>
+          <td>{{ item.username }}</td>
+          <td>{{ item.password }}</td>
+
+          @if(isAdmin && item.id){
+          <td>
+            <button mat-raised-button color="accent" class="save-btn" (click)="navigateToEdit(item.id)">
+              Edit
+            </button>
+          </td>
           }
         </tr>
-        } @empty{
+        } @empty {
         <mat-card-content>
           <span class="no-data">There is no data available!</span>
         </mat-card-content>
