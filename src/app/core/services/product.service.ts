@@ -29,7 +29,7 @@ export class ProductService {
           this.productSubject.next(this.products);
         },
         error: (err) => {
-          console.log(err);
+          this.snackBar.openSnackBar(`error: ${err}`, false)
         },
       });
     }

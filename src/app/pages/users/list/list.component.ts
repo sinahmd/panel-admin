@@ -51,6 +51,7 @@ export class ListComponent implements OnInit {
           this.users = data;
         },
         error: (err) => {
+          this.snackBarService.openSnackBar("Error fetching users", false)
           console.error('Error fetching users:', err);
         }
       });
