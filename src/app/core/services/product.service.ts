@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AutheticationService } from '../auth/authetication.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Product } from '../models/product.model';
+import { SnackBarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,13 +15,13 @@ export class ProductService {
   >(this.products);
   private apiUrl = 'http://localhost:3000/api/products';
 
-  constructor(private http: HttpClient, private auth: AutheticationService) {}
+  constructor(private http: HttpClient, private auth: AutheticationService, private snackBar: SnackBarService) { }
 
   getProducts(): Observable<Product[]> {
     const sessionId = this.auth.sessionIdSubject.value;
 
     if (sessionId) {
-      const headers = new HttpHeaders().set('Authorization', sessionId);
+      const headers = this.auth.getHeaders();
 
       this.http.get<Product[]>(this.apiUrl, { headers }).subscribe({
         next: (data) => {
@@ -38,13 +39,26 @@ export class ProductService {
 
   addProduct(product: Product): Observable<any> {  // TODO: fix any
     const sessionId = this.auth.sessionIdSubject.value as string;
-    const headers = new HttpHeaders().set('Authorization', sessionId);
+    if (sessionId) {
+      const headers = this.auth.getHeaders();
 
-    return this.http.post(this.apiUrl, product, { headers });
+      return this.http.post(this.apiUrl, product, { headers });
+    }
+    if (!sessionId) {
+      this.snackBar.openSnackBar("there is no session id", false);
+      return of(null); 
+    }
+    return this.productSubject.asObservable();
   }
 
   updateProduct(product: Product): Observable<any> {
     const headers = this.auth.getHeaders();
     return this.http.put<any>(this.apiUrl, product, { headers });
+  }
+
+  getProductById(productId: number): any {
+    console.log(productId,"prod id")
+      const headers = this.auth.getHeaders();
+      return this.http.get<Product>(`this.${this.apiUrl}/${productId}`, { headers } )
   }
 }

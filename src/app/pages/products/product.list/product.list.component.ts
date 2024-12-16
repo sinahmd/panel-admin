@@ -33,29 +33,10 @@ export class ProductListComponent {
     }
   }
 
-  startEditing(index: number, item: any): void {
-    if (!this.editingStates[index]) {
-      this.editingStates[index] = {
-        editingIndex: index,
-        editingRow: { ...item },
-        invalidFields: {}
-      };
-    }
+  navigateToEdit(productId: any): void {
+    this.router.navigate([`products/edit/${productId}`])
   }
 
-  saveEditing(index: number, item: any): void {
-    const updatedProduct = this.editingStates[index].editingRow;
-
-    this.productService.updateProduct(updatedProduct).subscribe({
-      next: (updatedProduct) => {
-        this.products[index] = updatedProduct;
-        this.cancelEditing(index);
-      },
-      error: (err) => {
-        console.error('Error updating product:', err);
-      }
-    });
-  }
   cancelEditing(index: number): void {
     this.editingStates[index] = null;
   }

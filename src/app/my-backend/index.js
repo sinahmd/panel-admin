@@ -135,10 +135,10 @@ app.get('/api/users', (req, res) => {
         return;
     }
 
-    if (users[session.userId].role !== role.admin) {
-        res.status(403).send('User role must be admin');
-        return;
-    }
+    // if (users[session.userId].role !== role.admin) {
+    //     res.status(403).send('User role must be admin');
+    //     return;
+    // }
 
     const userList = Object.values(users).filter(user => user.role !== role.admin);
 
@@ -168,9 +168,7 @@ app.get('/api/users/:id', (req, res) => {
         return;
     }
 
-    const userCopy = { ...user };
-    delete userCopy.password;
-    res.json(userCopy);
+    res.json(user);
 });
 
 app.post('/api/products', (req, res) => {
@@ -235,6 +233,29 @@ app.get('/api/products', (req, res) => {
     const productList = Object.values(products)
 
     res.json(productList);
+});
+
+app.get('/api/products/:id', (req, res) => {
+    if (!req.headers.authorization) {
+        res.status(401).send('Authentication is required');
+        return;
+    }
+
+    const session = sessions[req.headers.authorization];
+    if (!session) {
+        res.status(403).send('Session is invalid');
+        return;
+    }
+
+    const productId = req.params.id;
+
+    const product = products[productId];
+    if (!product) {
+        res.status(404).send('Product not found');
+        return;
+    }
+
+    res.json(product);
 });
 
 app.listen(port, () => {

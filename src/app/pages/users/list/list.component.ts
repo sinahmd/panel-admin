@@ -29,6 +29,7 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.authService.isAuthenticated()) {
+      console.log(this.authService.isAuthenticated(), "his.authService.isAuthenticated()")
       this.router.navigate(['/login']);
       return;
     }
@@ -38,7 +39,7 @@ export class ListComponent implements OnInit {
         this.isAdmin = role === 1;
       },
       error: (err) => {
-        console.error('Error fetching user role:', err);
+        this.snackBarService.openSnackBar("you do not have permission", false)
         this.router.navigate(['/login']);
       }
     });
@@ -70,8 +71,4 @@ export class ListComponent implements OnInit {
     }
   }
 
-  startEditing(userId: number): void {
-    this.router.navigate([`/users/edit/${userId}`]);
-  }
-  
 }

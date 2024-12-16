@@ -28,6 +28,14 @@
             <mat-error> username is required! </mat-error>
             }
         </mat-form-field>
+
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" required />
+          @if(formGroup.get('password')?.hasError('required')){
+            <mat-error> password is required! </mat-error>
+            }
+        </mat-form-field>
   
         <mat-form-field appearance="fill" class="form-field">
           <mat-label>Role</mat-label>
