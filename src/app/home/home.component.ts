@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
-import { AutheticationService } from '../services/authetication.service';
+import { AutheticationService } from '../core/auth/authetication.service';
 import {  MatCardModule } from '@angular/material/card';
-import { ListComponent } from '../users/list/list.component';
+import { ListComponent } from '../pages/users/list/list.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 @Component({

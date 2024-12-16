@@ -20,7 +20,7 @@ export class AuthenticationGaurdService implements CanActivate {
       take(1), 
       map(currentRole => {
         
-        if (this.auth.isAuthenticated() && requiredRole === currentRole) { // TODO: change 1
+        if (this.auth.isAuthenticated() && requiredRole === currentRole) { 
           return true;
         } else {
           this.router.navigate(['/login']);

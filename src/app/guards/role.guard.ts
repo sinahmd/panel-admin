@@ -1,5 +1,5 @@
 import { CanActivateFn, Router } from '@angular/router';
-import { AutheticationService } from '../services/authetication.service';
+import { AutheticationService } from '../core/auth/authetication.service';
 import { inject } from '@angular/core';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 export const roleGuard: CanActivateFn = (route, state) => {

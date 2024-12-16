@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AutheticationService } from '../services/authetication.service';
-import { UserService } from '../services/user.service';
+import { AutheticationService } from '../../core/auth/authetication.service';
 import {
-  FormBuilder,
   FormControl,
   FormGroup,
   FormsModule,
@@ -17,8 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { Login } from '../../models/login.model';
-import { Observer } from 'rxjs';
+import { Login } from '../../core/models/login.model';
 
 
 @Component({

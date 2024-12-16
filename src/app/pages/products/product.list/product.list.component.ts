@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { Product } from '../../models/product.model';
+import { Product } from '../../../core/models/product.model';
 import { Router } from '@angular/router';
-import { AutheticationService } from '../services/authetication.service';
-import { ProductService } from '../services/product.service';
+import { AutheticationService } from '../../../core/auth/authetication.service';
+import { ProductService } from '../../../core/services/product.service';
 import { MatCard, MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -21,7 +21,7 @@ export class ProductListComponent {
     private router: Router,
     private authService: AutheticationService,
     private productService: ProductService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     if (this.authService.isAuthenticated()) {
@@ -31,14 +31,14 @@ export class ProductListComponent {
           this.products = data;
         },
       });
-    } 
+    }
   }
 
   startEditing(index: number, item: any): void {
     if (!this.editingStates[index]) {
-      this.editingStates[index] = { 
-        editingIndex: index, 
-        editingRow: { ...item }, 
+      this.editingStates[index] = {
+        editingIndex: index,
+        editingRow: { ...item },
         invalidFields: {}
       };
     }
@@ -51,7 +51,7 @@ export class ProductListComponent {
       next: (updatedProduct) => {
         console.log('User updated', updatedProduct);
         this.products[index] = updatedProduct;
-        this.cancelEditing(index); 
+        this.cancelEditing(index);
       },
       error: (err) => {
         console.error('Error updating product:', err);
@@ -59,11 +59,11 @@ export class ProductListComponent {
     });
   }
   cancelEditing(index: number): void {
-    this.editingStates[index] = null; 
+    this.editingStates[index] = null;
   }
 
   navigateToAdd(): void {
-      this.router.navigate(['/products/add']);
+    this.router.navigate(['/products/add']);
   }
 
 }

@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { BrowserModule } from '@angular/platform-browser';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { AutheticationService } from './services/authetication.service';
-import { AuthenticationGaurdService } from './services/authentication.gaurd.service';
+import { AutheticationService } from './core/auth/authetication.service';
 import { filter } from 'rxjs';
 @Component({
   selector: 'app-root',

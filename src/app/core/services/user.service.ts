@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { User } from '../../models/user.medel';
+import { User } from '../models/user.medel';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AutheticationService } from './authetication.service';
+import { AutheticationService } from '../auth/authetication.service';
 
 @Injectable({
   providedIn: 'root'

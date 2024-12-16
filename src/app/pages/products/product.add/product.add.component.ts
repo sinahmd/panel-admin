@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../services/product.service';
+import { ProductService } from '../../../core/services/product.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { SnackBarService } from '../services/snackbar.service';
-import { Product } from '../../models/product.model';
+import { SnackBarService } from '../../../core/services/snackbar.service';
+import { Product } from '../../../core/models/product.model';
 import { MatCardContent, MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { notEmptyValidator } from '../validators/requierd.validator';
+import { notEmptyValidator } from '../../../core/validators/requierd.validator';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -24,7 +24,6 @@ import { CommonModule } from '@angular/common';
     MatCardModule,
     MatButtonModule,
     CommonModule,
-    
   ],
   templateUrl: './product.add.component.html',
   styleUrl: './product.add.component.scss',

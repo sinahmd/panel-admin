@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { UserService } from '../../services/user.service';
-import { AutheticationService } from '../../services/authetication.service';
+import { Router, RouterModule } from '@angular/router';
+import { UserService } from '../../../core/services/user.service';
+import { AutheticationService } from '../../../core/auth/authetication.service';
 import { MatCard, MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { User } from '../../../models/user.medel';
-import { SnackBarService } from '../../services/snackbar.service';
+import { User } from '../../../core/models/user.medel';
+import { SnackBarService } from '../../../core/services/snackbar.service';
 
 @Component({
   selector: 'list',
-  imports: [ RouterModule, CommonModule, FormsModule, MatCard, MatCardModule],
+  imports: [RouterModule, CommonModule, FormsModule, MatCard, MatCardModule],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
 })
@@ -26,7 +26,7 @@ export class ListComponent implements OnInit {
     private router: Router,
     private snackBarService: SnackBarService
   ) { }
-  
+
   ngOnInit(): void {
     if (!this.authService.isAuthenticated()) {
       this.router.navigate(['/login']);
@@ -44,6 +44,7 @@ export class ListComponent implements OnInit {
         this.router.navigate(['/login']);
       }
     });
+
 
     if (this.authService.isAuthenticated()) {
       this.userService.getUsers().subscribe({
@@ -74,7 +75,7 @@ export class ListComponent implements OnInit {
       this.editingStates[index] = { editingIndex: index, editingRow: { ...item } };
     }
   }
-
+  // TODO: ask for add it or not?
   // deleteRow(index: number, userId: number): void {
   //   if (confirm('Are you sure you want to delete this user?')) {
   //     const userId = this.users[index].id;
@@ -96,7 +97,7 @@ export class ListComponent implements OnInit {
 
     if (!updatedUser.firstName || !updatedUser.lastName || !updatedUser.role || !updatedUser.nationalCode || !updatedUser.mobile || !updatedUser.password) {
       this.snackBarService.openSnackBar('Please fill required fields.', false);
-      this.markFieldsAsInvalid(index); 
+      this.markFieldsAsInvalid(index);
       return;
     }
 
@@ -116,7 +117,7 @@ export class ListComponent implements OnInit {
 
   markFieldsAsInvalid(index: number): void {
     const user = this.editingStates[index].editingRow;
-    
+
     this.editingStates[index].invalidFields = {
       firstName: !user.firstName,
       lastName: !user.lastName,

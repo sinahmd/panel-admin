@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../../core/services/user.service';
 import { Router } from '@angular/router';
-import { User } from '../../../models/user.medel';
+import { User } from '../../../core/models/user.medel';
 import {
   FormControl,
   FormGroup,
@@ -18,7 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
-import { SnackBarService } from '../../services/snackbar.service';
+import { SnackBarService } from '../../../core/services/snackbar.service';
 @Component({
   selector: 'app-add',
   imports: [
@@ -44,7 +44,7 @@ export class AddComponent implements OnInit {
     private userService: UserService,
     private snackBarService: SnackBarService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.formGroup = new FormGroup({

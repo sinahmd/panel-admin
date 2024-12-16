@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AutheticationService } from './authetication.service';
+import { AutheticationService } from '../auth/authetication.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Product } from '../../models/product.model';
+import { Product } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root',
