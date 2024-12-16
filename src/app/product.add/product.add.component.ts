@@ -9,6 +9,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { notEmptyValidator } from '../validators/requierd.validator';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-product.add',
@@ -21,7 +23,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatCardContent,
     MatCardModule,
     MatButtonModule,
-
+    CommonModule,
+    
   ],
   templateUrl: './product.add.component.html',
   styleUrl: './product.add.component.scss',
@@ -37,7 +40,7 @@ export class ProductAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.formGroup = new FormGroup({
-      name: new FormControl(null, [Validators.required]),
+      name: new FormControl(null, [Validators.required, notEmptyValidator()]),
       code: new FormControl(null, [Validators.required]),
       weight: new FormControl(null, [Validators.required]),
     });

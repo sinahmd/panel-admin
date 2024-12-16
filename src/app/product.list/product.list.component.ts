@@ -31,20 +31,19 @@ export class ProductListComponent {
           this.products = data;
         },
       });
-    } else {
-      console.log('not authorized');
-    }
+    } 
   }
-
-
 
   startEditing(index: number, item: any): void {
     if (!this.editingStates[index]) {
-      this.editingStates[index] = { editingIndex: index, editingRow: { ...item } };
+      this.editingStates[index] = { 
+        editingIndex: index, 
+        editingRow: { ...item }, 
+        invalidFields: {}
+      };
     }
   }
 
-  
   saveEditing(index: number, item: any): void {
     const updatedProduct = this.editingStates[index].editingRow;
 

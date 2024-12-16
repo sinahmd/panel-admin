@@ -104,6 +104,17 @@ mat-card {
   .create-button-list-header:hover {
     background-color: #083731;
   }
+
+  .invalid-field {
+    border: 1px solid red;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
   
   @media (max-width: 600px) {
     th, td {

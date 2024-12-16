@@ -83,7 +83,7 @@
     padding: 12px;
     font-size: 16px;
     color: white;
-    background-color: #3f51b5; 
+    background-color: #00796b; 
     border-radius: 4px;  
     text-transform: uppercase;  
     border: none;
@@ -93,7 +93,7 @@
   
 
   button[mat-raised-button]:hover {
-    background-color: #303f9f; 
+    background-color: #169c8c; 
   }
   
   mat-card-content {
@@ -110,3 +110,4 @@
     padding: 20px;
     border-radius: 8px;
   }
+
