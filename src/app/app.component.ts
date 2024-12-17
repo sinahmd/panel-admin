@@ -22,9 +22,9 @@ import { filter } from 'rxjs';
 })
 export class AppComponent {
   title = 'crud';
-  isLoggedIn = false;
+  isLoggedIn: boolean = false;
   isLoginPage: boolean = false;
-  isAdmin = false;
+  isAdmin: boolean = false;
 
   constructor(private auth: AutheticationService, private router: Router) { }
   ngOnInit(): void {

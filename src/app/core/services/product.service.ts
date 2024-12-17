@@ -61,7 +61,6 @@ export class ProductService {
   }
 
   getProductById(productId: number): any {
-    console.log(productId,"prod id")
       const headers = this.auth.getHeaders();
       return this.http.get<Product>(`${this.apiUrl}/${productId}`, { headers } )
   }

@@ -4,7 +4,7 @@ export interface User {
     id?: number;
     firstName:FormControl<string>;
     lastName: FormControl<string>;
-    role:FormControl<0 | 1>;
+    role: number;
     nationalCode: FormControl<string>;
     mobile: FormControl<string>;
     username: FormControl<string>;

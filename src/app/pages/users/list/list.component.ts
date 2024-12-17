@@ -7,17 +7,18 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../../core/models/user.medel';
 import { SnackBarService } from '../../../core/services/snackbar.service';
+import { RolePipe } from '../../../core/pipes/role.pipe';
 
 @Component({
   selector: 'list',
-  imports: [RouterModule, CommonModule, FormsModule, MatCard, MatCardModule],
+  imports: [RouterModule, CommonModule, FormsModule, MatCard, MatCardModule, RolePipe],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
 })
 export class ListComponent implements OnInit {
 
   users: User[] = []
-  isAdmin = false
+  isAdmin: boolean = false
 
   constructor(
     private userService: UserService,
@@ -28,7 +29,6 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.authService.isAuthenticated()) {
-      console.log(this.authService.isAuthenticated(), "his.authService.isAuthenticated()")
       this.router.navigate(['/login']);
       return;
     }
@@ -38,7 +38,6 @@ export class ListComponent implements OnInit {
         this.isAdmin = role === 1;
       },
       error: (err) => {
-        console.log(err,"err")
         this.snackBarService.openSnackBar("you do not have permission", false)
         this.router.navigate(['/login']);
       }
