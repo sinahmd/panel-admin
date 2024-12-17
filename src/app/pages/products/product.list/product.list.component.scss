@@ -78,6 +78,20 @@ mat-card {
     background-color: #194f1b; 
   }
   
+  &.delete-btn {
+    background-color: #a54646;
+    color: white;
+    border-radius: 2px;
+    border: none;
+    padding: 4px;
+    margin-left: 4px;
+  }
+
+  &.delete-btn:hover {
+    background-color: #611a1a;
+  }
+
+  
   &.cancel-btn {
     background-color: #f44336;
     color: white;

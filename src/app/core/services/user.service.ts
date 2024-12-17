@@ -66,7 +66,7 @@ export class UserService {
 
   deleteUser(userId: number): Observable<any> {
     const headers = this.auth.getHeaders();
-    return this.http.delete<any>(`${this.apiUrl}/${userId}`, { headers });
+    return this.http.delete<string>(`${this.apiUrl}/${userId}`, { headers });
   }
   
 }

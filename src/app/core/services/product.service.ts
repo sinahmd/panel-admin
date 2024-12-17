@@ -65,4 +65,10 @@ export class ProductService {
       const headers = this.auth.getHeaders();
       return this.http.get<Product>(`${this.apiUrl}/${productId}`, { headers } )
   }
+
+  deleteProduct(productId:number): Observable<any>{
+    const headers = this.auth.getHeaders();
+    return this.http.delete<string>(`${this.apiUrl}/${productId}`, { headers })
+
+  }
 }

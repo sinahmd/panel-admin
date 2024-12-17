@@ -1,4 +1,3 @@
-
 mat-card {
   margin: 20px;
   padding: 20px;
@@ -13,13 +12,14 @@ mat-card {
 }
 
 
-th, td {
+th,
+td {
   padding: 12px 20px;
   text-align: left;
   font-size: 14px;
   border-bottom: 1px solid #ddd;
   vertical-align: middle;
-  width: 150px; 
+  width: 150px;
 }
 
 
@@ -31,66 +31,83 @@ th {
 
 
 tr:nth-child(odd) td {
-  background-color: #dee9e7; 
+  background-color: #dee9e7;
 }
 
 tr:nth-child(even) td {
-  background-color: #ffffff; 
+  background-color: #ffffff;
 }
 
 tr:hover td {
-  background-color: #cecccc; 
+  background-color: #cecccc;
 }
 
 input {
   font-size: 14px;
   padding: 5px;
-  width: 100%; 
+  width: 100%;
   border: 1px solid #ddd;
   border-radius: 4px;
-  box-sizing: border-box; 
+  box-sizing: border-box;
   background-color: #fff;
   color: #000;
-  height: 32px; 
+  height: 32px;
   text-align: left;
   margin: 0;
 }
 
 
 button:hover {
-cursor: pointer;
+  cursor: pointer;
 }
 
 button.mat-raised-button {
   font-size: 14px;
   padding: 5px 10px;
 }
+
 button {
-&.save-btn {
-  background-color: #4caf50;
-  color: white;
-  border-radius: 2px;
-  border: none;
-  padding: 4px;
+  &.save-btn {
+    background-color: #2d7530;
+    color: white;
+    border-radius: 2px;
+    border: none;
+    padding: 4px;
+  }
+
+  &.save-btn:hover {
+    background-color: #194f1b;
+  }
+
+
+    &.delete-btn {
+      background-color: #a54646;
+      color: white;
+      border-radius: 2px;
+      border: none;
+      padding: 4px;
+      margin-left: 4px;
+    }
+
+    &.delete-btn:hover {
+      background-color: #611a1a;
+    }
+  
+
+  &.cancel-btn {
+    background-color: #f44336;
+    color: white;
+    border-radius: 2px;
+    border: none;
+    padding: 4px;
+    margin-left: 5px;
+  }
+
+  &.cancel-btn:hover {
+    background-color: #7c1715;
+  }
 }
 
-&.save-btn:hover {
-  background-color: #194f1b; 
-}
-
-&.cancel-btn {
-  background-color: #f44336;
-  color: white;
-  border-radius: 2px;
-  border: none;
-  padding: 4px;
-  margin-left: 5px;
-}
-
-&.cancel-btn:hover {
-  background-color: #7c1715; 
-}
-}
 .create-button-list-header {
   font-size: 16px;
   padding: 10px 20px;
@@ -106,7 +123,9 @@ button {
 }
 
 @media (max-width: 600px) {
-  th, td {
+
+  th,
+  td {
     padding: 8px 15px;
     font-size: 12px;
   }

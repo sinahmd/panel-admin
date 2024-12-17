@@ -72,4 +72,19 @@ export class ListComponent implements OnInit {
     }
   }
 
+  deleteUser(userId: number): void {
+    if (confirm('Are you sure you want to delete this user?')) {
+      this.userService.deleteUser(userId).subscribe({
+        next: () => {
+          this.snackBarService.openSnackBar('User deleted successfully', true);
+          this.userService.getUsers();  
+        },
+        error: (err) => {
+          this.snackBarService.openSnackBar('Error deleting user', false);
+          console.error('Error deleting user:', err);
+        }
+      });
+    }
+  }
+
 }
