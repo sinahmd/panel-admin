@@ -18,10 +18,7 @@ export class AutheticationService {
       this.sessionIdSubject.next(storedSessionId);
     }
 
-    const storedRole = localStorage.getItem('role');
-    if (storedRole) {
-      this.roleSubject.next(Number(storedRole));  
-    }
+
   }
 
   get sessionId$(): Observable<string | null> {
@@ -58,7 +55,8 @@ export class AutheticationService {
       map(user => {
         const role = user?.role;
         this.roleSubject.next(role);
-        localStorage.setItem('role', String(role));
+        // localStorage.setItem('role', String(role));
+      
       }),
       catchError(err => {
         console.error('Error fetching user role:', err);
@@ -97,8 +95,15 @@ export class AutheticationService {
   isAuthenticated(): boolean {    
     return this.sessionIdSubject.value !== null;
   }
-
   getUserRole(): Observable<number> {
-    return this.roleSubject.asObservable();
+    const sessionId = this.sessionIdSubject.value;
+    if (sessionId) {
+      return this.fetchUserRole(sessionId).pipe(
+        map(() => this.roleSubject.value) 
+      );
+    } else {
+      return of(0); 
+    }
   }
+
 }
