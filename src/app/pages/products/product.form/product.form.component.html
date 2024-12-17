@@ -1,6 +1,6 @@
 <mat-card class="container">
     <mat-card-header>
-      <mat-card-title class="title">Edit Product</mat-card-title>
+      <mat-card-title class="title">{{ isEditMode ? 'Edit Product' : 'Create Product'}}</mat-card-title>
     </mat-card-header>
   
     <form [formGroup]="formGroup">
@@ -29,8 +29,7 @@
             }
         </mat-form-field>
   
-        <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">Submit</button>
+        <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">{{isEditMode ? 'Update Product' : 'Create Product'}}</button>
       </mat-card-content>
     </form>
   </mat-card>
-  

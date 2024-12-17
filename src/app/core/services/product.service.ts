@@ -4,6 +4,7 @@ import { AutheticationService } from '../auth/authetication.service';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Product } from '../models/product.model';
 import { SnackBarService } from './snackbar.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class ProductService {
   >(this.products);
   private apiUrl = 'http://localhost:3000/api/products';
 
-  constructor(private http: HttpClient, private auth: AutheticationService, private snackBar: SnackBarService) { }
+  constructor(private http: HttpClient, private auth: AutheticationService, private snackBar: SnackBarService, private router: Router) { }
 
   getProducts(): Observable<Product[]> {
     const sessionId = this.auth.sessionIdSubject.value;
@@ -29,7 +30,10 @@ export class ProductService {
           this.productSubject.next(this.products);
         },
         error: (err) => {
-          this.snackBar.openSnackBar(`error: ${err}`, false)
+          if(err.status === 403 || err.status === 401) {
+            this.router.navigate(['/login'])
+          }
+          this.snackBar.openSnackBar(`error: ${err?.error}`, false)
         },
       });
     }

@@ -18,7 +18,6 @@ export class ListComponent implements OnInit {
 
   users: User[] = []
   isAdmin = false
-  editingStates: any[] = [];
 
   constructor(
     private userService: UserService,
@@ -39,6 +38,7 @@ export class ListComponent implements OnInit {
         this.isAdmin = role === 1;
       },
       error: (err) => {
+        console.log(err,"err")
         this.snackBarService.openSnackBar("you do not have permission", false)
         this.router.navigate(['/login']);
       }

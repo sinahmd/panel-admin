@@ -1,24 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UserService } from '../../../core/services/user.service';
 import { SnackBarService } from '../../../core/services/snackbar.service';
 import { User } from '../../../core/models/user.medel';
 import { MatCardContent, MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatOptionModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
 
 @Component({
-  selector: 'app-edit',
+  selector: 'app-user-form',
   imports: [
     FormsModule,
     MatInputModule,
-    MatCardContent,
+    // MatCardContent,
     ReactiveFormsModule,
     MatCardModule,
     MatButtonModule,
@@ -28,22 +28,24 @@ import { MatSelectModule } from '@angular/material/select';
     MatIconModule,
     MatOptionModule,
   ],
-  templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.scss']
+  templateUrl: './user.form.component.html',
+  styleUrls: ['./user.form.component.scss'],
 })
-export class EditComponent implements OnInit {
+export class UserFormComponent implements OnInit {
   formGroup!: FormGroup;
-  userId!: number;
+  userId?: number;
+  isEditMode = false;  
 
   constructor(
     private userService: UserService,
     private snackBarService: SnackBarService,
     private router: Router,
     private activatedRoute: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.userId = +this.activatedRoute.snapshot.paramMap.get('id')!;
+    this.isEditMode = !!this.userId;
 
     this.formGroup = new FormGroup({
       firstName: new FormControl('', [Validators.required]),
@@ -55,13 +57,16 @@ export class EditComponent implements OnInit {
       mobile: new FormControl('', [Validators.required]),
     });
 
-    this.loadUserData();
+    if (this.isEditMode) {
+      this.loadUserData();
+    }
   }
 
   loadUserData(): void {
+    if (!this.userId) return;
+
     this.userService.getUserById(this.userId).subscribe({
       next: (user: User) => {
-        console.log(user,"suer edit")
         this.formGroup.patchValue({
           firstName: user.firstName || '',
           lastName: user.lastName || '',
@@ -84,17 +89,30 @@ export class EditComponent implements OnInit {
       return;
     }
 
-    const updatedUser: User = { ...this.formGroup.value, id: this.userId };
+    const formData = this.formGroup.value;
+    const user: User = { ...formData };
 
-    this.userService.updateUser(updatedUser).subscribe({
-      next: (updatedUser) => {
-        this.snackBarService.openSnackBar('User updated successfully!', true);
-        this.router.navigate(['/users']);
-      },
-      error: (err) => {
-        this.snackBarService.openSnackBar('Error updating user', false);
-      }
-    });
+    if (this.isEditMode && this.userId) {
+      user.id = this.userId;
+      this.userService.updateUser(user).subscribe({
+        next: () => {
+          this.snackBarService.openSnackBar('User updated successfully!', true);
+          this.router.navigate(['/users']);
+        },
+        error: (err) => {
+          this.snackBarService.openSnackBar('Error updating user', false);
+        }
+      });
+    } else {
+      this.userService.addUser(user).subscribe({
+        next: () => {
+          this.snackBarService.openSnackBar('User created successfully!', true);
+          this.router.navigate(['/users']);
+        },
+        error: (err) => {
+          this.snackBarService.openSnackBar('Error creating user', false);
+        }
+      });
+    }
   }
 }
-

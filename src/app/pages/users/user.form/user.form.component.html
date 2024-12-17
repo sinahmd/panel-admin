@@ -1,0 +1,67 @@
+<mat-card class="user-container">
+  <mat-card-header>
+    <mat-card-title class="user-title">{{ isEditMode ? 'Edit User' : 'Add User' }}</mat-card-title>
+  </mat-card-header>
+
+  <form [formGroup]="formGroup">
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName" required />
+        @if(formGroup.get('firstName')?.hasError('required')){
+        <mat-error> first Name is required! </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" required />
+        @if(formGroup.get('lastName')?.hasError('required')){
+        <mat-error> last Name is required! </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" required />
+        @if(formGroup.get('username')?.hasError('required')){
+        <mat-error> username is required! </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" required />
+        @if(formGroup.get('password')?.hasError('required')){
+        <mat-error> password is required! </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Role</mat-label>
+        <mat-select formControlName="role" required>
+          <mat-option [value]="0">User</mat-option>
+          <mat-option [value]="1">Admin</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>National Code</mat-label>
+        <input matInput formControlName="nationalCode" required />
+        @if(formGroup.get('nationalCode')?.hasError('required')){
+        <mat-error> nationalCode is required! </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Phone Number</mat-label>
+        <input matInput formControlName="mobile" required />
+        @if(formGroup.get('mobile')?.hasError('required')){
+        <mat-error> mobile is required! </mat-error>
+        }
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">
+        {{ isEditMode ? 'Update User' : 'Create User' }}
+      </button>
+  </form>
+</mat-card>
