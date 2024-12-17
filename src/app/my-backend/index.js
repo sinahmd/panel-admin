@@ -220,7 +220,7 @@ app.put('/api/products', (req, res) => {
 });
 
 app.get('/api/products', (req, res) => {
-    if (!req.   headers.authorization) {
+    if (!req.headers.authorization) {
         res.status(401).send('Authentication is required');
         return;
     }
@@ -247,9 +247,8 @@ app.get('/api/products/:id', (req, res) => {
         return;
     }
 
-    const productId = req.params.id;
 
-    const product = products[productId];
+    const product = products[req.params.id];
     if (!product) {
         res.status(404).send('Product not found');
         return;
