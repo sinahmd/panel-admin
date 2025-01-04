@@ -8,10 +8,11 @@ import { FormsModule } from '@angular/forms';
 import { User } from '../../../core/models/user.medel';
 import { SnackBarService } from '../../../core/services/snackbar.service';
 import { RolePipe } from '../../../core/pipes/role.pipe';
+import { UserFilterComponent } from '../user.filter/user.filter.component';
 
 @Component({
   selector: 'list',
-  imports: [RouterModule, CommonModule, FormsModule, MatCard, MatCardModule, RolePipe],
+  imports: [RouterModule, CommonModule, FormsModule, MatCard, MatCardModule, RolePipe, UserFilterComponent],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
 })

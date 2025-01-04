@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of, catchError, map, switchMap } from 'rxjs';
+import { UserRoleCacheService } from '../services/user-role-cache.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +13,11 @@ export class AutheticationService {
   sessionIdSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
   private roleSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0); 
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private cacheRole: UserRoleCacheService) {
     const storedSessionId = localStorage.getItem('sessionId');
     if (storedSessionId) {
       this.sessionIdSubject.next(storedSessionId);
     }
-
-
   }
 
   get sessionId$(): Observable<string | null> {
@@ -51,12 +50,25 @@ export class AutheticationService {
 
   private fetchUserRole(sessionId: string): Observable<void> {
     const headers = new HttpHeaders().set('Authorization', sessionId);
+    const cacheKey = 'userRole';
+    const cachedRole = this.cacheRole.get(cacheKey);
+
+
+    if (cachedRole) {                                                                                                                                                                                                               
+      return new Observable((observer) => {
+        observer.next(cachedRole);
+        observer.complete();
+      });
+    }
     return this.http.get<any>('http://localhost:3000/api/users/current', { headers }).pipe(
       map(user => {
         const role = user?.role;
         this.roleSubject.next(role);
+        this.cacheRole.set(cacheKey, role); 
+        console.log(cachedRole, "cache role ")
+          return role;
+        // this.cacheRole.set( role);
         // localStorage.setItem('role', String(role));
-      
       }),
       catchError(err => {
         console.error('Error fetching user role:', err);
@@ -65,18 +77,7 @@ export class AutheticationService {
     );
   }
 
-  // logout(): void {
-  //   const sessionId = localStorage.getItem('sessionId');
-  //   if (sessionId) {
-  //     this.http.post(`${this.apiUrl}/logout`, { sessionId }).subscribe(() => {
-  //       localStorage.removeItem('sessionId');
-  //       localStorage.removeItem('role'); 
-  //       this.sessionIdSubject.next(null);
-  //       this.roleSubject.next(0); 
-  //       this.router.navigate(['/login']);
-  //     });
-  //   }
-  // }
+
   logout(): void {
     localStorage.removeItem('sessionId');
     localStorage.removeItem('role');
@@ -88,7 +89,6 @@ export class AutheticationService {
 
   getHeaders(): HttpHeaders {
     const sessionId = localStorage.getItem('sessionId');
-    // const sessionId = this.sessionIdSubject.value;
     return new HttpHeaders().set('Authorization', sessionId || '');
   }
 
@@ -96,14 +96,14 @@ export class AutheticationService {
     return this.sessionIdSubject.value !== null;
   }
   getUserRole(): Observable<number> {
+
     const sessionId = this.sessionIdSubject.value;
     if (sessionId) {
       return this.fetchUserRole(sessionId).pipe(
-        map(() => this.roleSubject.value) 
+        map(() => this.cacheRole.get('userRole')) 
       );
     } else {
       return of(0); 
     }
   }
-
 }

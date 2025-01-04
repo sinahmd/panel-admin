@@ -4,7 +4,6 @@ import {
   ActivatedRouteSnapshot,
   CanActivate,
   Router,
-  RouterStateSnapshot,
 } from '@angular/router';
 import { Observable, map, take } from 'rxjs';
 
@@ -13,7 +12,7 @@ import { Observable, map, take } from 'rxjs';
 })
 export class AuthenticationGaurdService implements CanActivate {
   constructor(private auth: AutheticationService, private router: Router) {}
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+  canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
     const requiredRole = route.data['roles']; 
     return this.auth.getUserRole().pipe(
       take(1), 
