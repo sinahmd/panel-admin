@@ -17,8 +17,10 @@ export const routes: Routes = [
   { path: 'products/edit/:id', component: ProductFormComponent},
   { path: '**', redirectTo: '/login', pathMatch: 'full' }
 ];
+
   @NgModule({
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule]
   })
+  
   export class AppRoutingModule {}

@@ -7,25 +7,18 @@ import { UserRoleCacheService } from '../services/user-role-cache.service';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AutheticationService {
   private apiUrl = 'http://localhost:3000/api/auth';
 
   sessionIdSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
-  private roleSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0); 
+  private roleSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   constructor(private http: HttpClient, private router: Router, private cacheRole: UserRoleCacheService) {
     const storedSessionId = localStorage.getItem('sessionId');
     if (storedSessionId) {
       this.sessionIdSubject.next(storedSessionId);
     }
-  }
-
-  get sessionId$(): Observable<string | null> {
-    return this.sessionIdSubject.asObservable();
-  }
-
-  get role$(): Observable<number> {
-    return this.roleSubject.asObservable();
   }
 
   login(username: string, password: string): Observable<void> {
@@ -35,13 +28,13 @@ export class AutheticationService {
       map((response: any) => {
         const sessionId = response?.sessionId;
         if (sessionId) {
-          localStorage.setItem('sessionId', sessionId); 
+          localStorage.setItem('sessionId', sessionId);
           this.sessionIdSubject.next(sessionId);
-          return sessionId; 
+          return sessionId;
         }
         throw new Error('Session ID not found');
       }),
-      switchMap(sessionId => this.fetchUserRole(sessionId)), 
+      switchMap(sessionId => this.fetchUserRole(sessionId)),
       catchError(err => {
         throw new Error('Login failed: ' + err.message);
       })
@@ -54,7 +47,7 @@ export class AutheticationService {
     const cachedRole = this.cacheRole.get(cacheKey);
 
 
-    if (cachedRole) {                                                                                                                                                                                                               
+    if (cachedRole) {
       return new Observable((observer) => {
         observer.next(cachedRole);
         observer.complete();
@@ -65,14 +58,13 @@ export class AutheticationService {
         const role = user?.role;
         this.roleSubject.next(role);
         this.cacheRole.set(cacheKey, role); 
-        console.log(cachedRole, "cache role ")
           return role;
         // this.cacheRole.set( role);
         // localStorage.setItem('role', String(role));
       }),
       catchError(err => {
         console.error('Error fetching user role:', err);
-        return of(undefined); 
+        return of(undefined);
       })
     );
   }
@@ -83,6 +75,7 @@ export class AutheticationService {
     localStorage.removeItem('role');
     this.sessionIdSubject.next(null);
     this.roleSubject.next(0);
+    this.cacheRole.set('userRole', null)
     this.router.navigate(['/login']);
   }
 
@@ -92,18 +85,20 @@ export class AutheticationService {
     return new HttpHeaders().set('Authorization', sessionId || '');
   }
 
-  isAuthenticated(): boolean {    
+  isAuthenticated(): boolean {
     return this.sessionIdSubject.value !== null;
   }
+
   getUserRole(): Observable<number> {
 
     const sessionId = this.sessionIdSubject.value;
     if (sessionId) {
+      console.log(this.cacheRole, "this cache role for fetch role")
       return this.fetchUserRole(sessionId).pipe(
-        map(() => this.cacheRole.get('userRole')) 
+        map(() => this.cacheRole.get('userRole'))
       );
     } else {
-      return of(0); 
+      return of(0);
     }
   }
 }

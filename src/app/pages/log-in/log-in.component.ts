@@ -73,8 +73,7 @@ export class LogInComponent {
       this.auth.login(this.formGroup.value.username, this.formGroup.value.password).subscribe({
 
         next: () => {
-          this.auth.getUserRole().subscribe(role => {
-
+          this.auth.getUserRole().subscribe(() => {
             this.router.navigate(['/users']);
             this.openSnackBar('Logedin successfully', true)
           });

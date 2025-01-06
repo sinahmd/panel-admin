@@ -38,6 +38,7 @@ export class AppComponent implements OnInit {
         this.isLoggedIn = this.auth.isAuthenticated(); 
         this.isLoading = false; 
       },
+
       error: () => {
         this.isLoggedIn = false;
         this.isLoading = false;
@@ -49,8 +50,10 @@ export class AppComponent implements OnInit {
     });
   }
 
+
   logout(): void {
     this.auth.logout();
     this.router.navigate(['/login']);
   }
+
 }
